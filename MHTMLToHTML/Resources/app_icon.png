@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="32" cy="32" r="30" fill="#007ACC" stroke="#005A9E" stroke-width="2"/>
+  
+  <!-- 左侧MHTML文档 -->
+  <rect x="8" y="18" width="14" height="18" rx="2" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <path d="M18 18 L22 22 L18 22 Z" fill="#E0E0E0"/>
+  <text x="15" y="30" font-family="Arial, sans-serif" font-size="5" font-weight="bold" text-anchor="middle" fill="#007ACC">MHT</text>
+  
+  <!-- 转换箭头 -->
+  <path d="M24 31 L36 31 L36 27 L44 32 L36 37 L36 33 L24 33 Z" fill="#FFD700" stroke="#E6C200" stroke-width="1"/>
+  
+  <!-- 右侧输出文档 -->
+  <!-- HTML文档 -->
+  <rect x="42" y="14" width="14" height="14" rx="2" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <path d="M52 14 L56 18 L52 18 Z" fill="#E0E0E0"/>
+  <text x="49" y="23" font-family="Arial, sans-serif" font-size="4" font-weight="bold" text-anchor="middle" fill="#E44D26">HTML</text>
+  
+  <!-- Markdown文档 -->
+  <rect x="42" y="36" width="14" height="14" rx="2" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="1"/>
+  <path d="M52 36 L56 40 L52 40 Z" fill="#E0E0E0"/>
+  <text x="49" y="45" font-family="Arial, sans-serif" font-size="5" font-weight="bold" text-anchor="middle" fill="#083FA1">MD</text>
+</svg> 

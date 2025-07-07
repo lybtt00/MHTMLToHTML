@@ -1,0 +1,238 @@
+﻿<Window x:Class="MHTMLToHTML.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MHTMLToHTML"
+        mc:Ignorable="d"
+        Title="MHTML转HTML工具" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen" >
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenCommand_Executed"/>
+    </Window.CommandBindings>
+    
+    <Window.InputBindings>
+        <KeyBinding Command="ApplicationCommands.Open" Key="O" Modifiers="Ctrl"/>
+    </Window.InputBindings>
+    
+    <Window.Resources>
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#005A9E"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#004578"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="32"/>
+        </Style>
+        
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- 菜单栏 -->
+        <Menu Grid.Row="0" Background="White" BorderBrush="#E0E0E0" BorderThickness="0,0,0,1">
+            <MenuItem Header="文件(_F)">
+                <MenuItem Header="打开MHTML文件(_O)" Name="menuOpenFile" Click="MenuOpenFile_Click" InputGestureText="Ctrl+O"/>
+                <Separator/>
+                <MenuItem Header="最近打开" Name="menuRecentFiles"/>
+                <Separator/>
+                <MenuItem Header="退出(_X)" Name="menuExit" Click="MenuExit_Click" InputGestureText="Alt+F4"/>
+            </MenuItem>
+            <MenuItem Header="工具(_T)">
+                <MenuItem Header="批量转换(_B)" Name="menuBatchConvert" Click="MenuBatchConvert_Click"/>
+                <Separator/>
+                <MenuItem Header="选项(_O)" Name="menuOptions" Click="MenuOptions_Click"/>
+            </MenuItem>
+            <MenuItem Header="帮助(_H)">
+                <MenuItem Header="使用说明(_H)" Name="menuHelp" Click="MenuHelp_Click"/>
+                <Separator/>
+                <MenuItem Header="关于(_A)" Name="menuAbout" Click="MenuAbout_Click"/>
+            </MenuItem>
+        </Menu>
+        
+        <!-- 主内容区域 -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+        
+        <!-- 标题区域 -->
+        <TextBlock Grid.Row="0" Text="MHTML到HTML转换工具" 
+                   FontSize="24" FontWeight="Bold" 
+                   Foreground="#007ACC" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,20"/>
+        
+        <!-- 文件选择区域 -->
+        <GroupBox Grid.Row="1" Header="文件选择" Margin="0,0,0,15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="选择MHTML文件:" Style="{StaticResource HeaderText}"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" Name="txtInputFile" 
+                 Style="{StaticResource ModernTextBox}" 
+                 IsReadOnly="True" 
+                 Margin="0,0,10,0"
+                 AllowDrop="True" 
+                 Drop="TxtInputFile_Drop"
+                 DragOver="TxtInputFile_DragOver"/>
+                <Button Grid.Row="1" Grid.Column="1" Name="btnBrowseInput" 
+                        Content="浏览..." 
+                        Style="{StaticResource ModernButton}" 
+                        Click="BtnBrowseInput_Click"/>
+            </Grid>
+        </GroupBox>
+        
+        <!-- 输出选择区域 -->
+        <GroupBox Grid.Row="2" Header="输出选项" Margin="0,0,0,15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- 输出格式选择 -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="输出格式:" Style="{StaticResource HeaderText}"/>
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10">
+                    <RadioButton Name="rbHTML" Content="HTML格式" IsChecked="True" Margin="0,0,20,0" 
+                                 FontSize="12" Checked="OutputFormat_Changed"/>
+                    <RadioButton Name="rbMarkdown" Content="Markdown格式" Margin="0,0,20,0" 
+                                 FontSize="12" Checked="OutputFormat_Changed"/>
+                </StackPanel>
+                
+                <TextBlock Grid.Row="2" Grid.Column="0" Name="txtOutputLabel" Text="输出HTML文件:" Style="{StaticResource HeaderText}"/>
+                <TextBox Grid.Row="3" Grid.Column="0" Name="txtOutputFile" 
+                         Style="{StaticResource ModernTextBox}" 
+                         Margin="0,0,10,0"/>
+                <Button Grid.Row="3" Grid.Column="1" Name="btnBrowseOutput" 
+                        Content="浏览..." 
+                        Style="{StaticResource ModernButton}" 
+                        Click="BtnBrowseOutput_Click"/>
+                
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Margin="0,10,0,0">
+                    <CheckBox Name="chkIncludeImages" 
+                              Content="包含图片（作为base64编码）" 
+                              IsChecked="True" 
+                              FontSize="12"/>
+                    <CheckBox Name="chkEnhancedMarkdown" 
+                              Content="增强Markdown格式处理（推荐）" 
+                              IsChecked="True" 
+                              Margin="0,5,0,0"
+                              FontSize="12"
+                              Visibility="Collapsed"/>
+                    <CheckBox Name="chkDebugMode" 
+                              Content="调试模式（显示详细转换日志）" 
+                              IsChecked="False" 
+                              Margin="0,5,0,0"
+                              FontSize="12"
+                              Visibility="Collapsed"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        
+        <!-- 转换按钮区域 -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+            <Button Name="btnConvert" 
+                    Content="开始转换" 
+                    Style="{StaticResource ModernButton}" 
+                    Click="BtnConvert_Click" 
+                    Margin="0,0,10,0"/>
+            <Button Name="btnClear" 
+                    Content="清空日志" 
+                    Style="{StaticResource ModernButton}" 
+                    Background="#6C757D" 
+                    Click="BtnClear_Click"/>
+        </StackPanel>
+        
+        <!-- 进度条 -->
+        <ProgressBar Grid.Row="4" Name="progressBar" 
+                     Height="20" 
+                     Margin="0,0,0,15" 
+                     Visibility="Collapsed"/>
+        
+        <!-- 日志显示区域 -->
+        <GroupBox Grid.Row="5" Header="转换日志">
+            <ScrollViewer>
+                <TextBox Name="txtLog" 
+                         TextWrapping="Wrap" 
+                         IsReadOnly="True" 
+                         Background="#F8F9FA" 
+                         BorderThickness="0" 
+                         FontFamily="Consolas" 
+                         FontSize="11" 
+                         VerticalScrollBarVisibility="Auto"/>
+            </ScrollViewer>
+        </GroupBox>
+        
+        <!-- 状态栏 -->
+        <StatusBar Grid.Row="6" Margin="0,10,0,0">
+            <StatusBarItem>
+                <TextBlock Name="txtStatus" Text="就绪"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock Name="txtFileInfo" Text=""/>
+            </StatusBarItem>
+        </StatusBar>
+        </Grid>
+    </Grid>
+</Window>
