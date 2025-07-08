@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="关于 MHTML转换工具" Height="500" Width="600"
+        Title="About MHTML Converter" Height="500" Width="600"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="#F8F9FA">
@@ -130,50 +130,52 @@
                             </Grid>
                         </Border>
 
-                        <TextBlock Text="MHTML转换工具" Style="{StaticResource HeaderText}"/>
+                        <TextBlock Name="txtAppName" Text="MHTML Converter" Style="{StaticResource HeaderText}"/>
                     </StackPanel>
                 </Border>
 
                 <!-- 应用信息 -->
                 <StackPanel>
-                    <TextBlock Text="版本 1.0.0" Style="{StaticResource VersionText}"/>
-                    <TextBlock Text="开发语言：C# / WPF | 框架版本：.NET 8.0" Style="{StaticResource VersionText}"/>
+                    <TextBlock Name="txtVersion" Text="Version 1.0.0" Style="{StaticResource VersionText}"/>
+                    <TextBlock Name="txtTechInfo" Text="Development Language: C# / WPF | Framework Version: .NET 8.0" Style="{StaticResource VersionText}"/>
 
                     <!-- 功能特点 -->
-                    <TextBlock Text="功能特点" Style="{StaticResource SectionHeader}"/>
+                    <TextBlock Name="txtFeaturesHeader" Text="Features" Style="{StaticResource SectionHeader}"/>
                     <StackPanel Margin="20,0,0,0">
-                        <TextBlock Text="• 支持HTML和Markdown双输出格式" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 批量转换功能，支持多文件处理" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 增强的Markdown格式处理" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 智能表格转换（支持thead/tbody结构）" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 优化表格格式" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 支持拖放操作" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 实时转换进度显示" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 详细日志记录和调试模式" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 图片base64编码支持" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 智能编码检测（GB2312、GBK、Big5等）" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 智能HTML预处理和后处理" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature1" Text="• Support for both HTML and Markdown output formats" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature2" Text="• Batch conversion functionality for multiple files" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature3" Text="• Enhanced Markdown format processing" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature4" Text="• Smart table conversion (supports thead/tbody structure)" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature5" Text="• Optimized table formatting" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature6" Text="• Drag and drop support" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature7" Text="• Real-time conversion progress display" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature8" Text="• Detailed logging and debug mode" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature9" Text="• Image base64 encoding support" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature10" Text="• Smart encoding detection (GB2312, GBK, Big5, etc.)" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature11" Text="• Smart HTML preprocessing and postprocessing" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature12" Text="• Multi-language interface support (Chinese/English)" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtFeature13" Text="• Recent files tracking" Style="{StaticResource FeatureText}"/>
                     </StackPanel>
 
                     <!-- 技术信息 -->
-                    <TextBlock Text="技术信息" Style="{StaticResource SectionHeader}"/>
+                    <TextBlock Name="txtTechDetailsHeader" Text="Technical Information" Style="{StaticResource SectionHeader}"/>
                     <StackPanel Margin="20,0,0,0">
-                        <TextBlock Text="• 基于Windows Presentation Foundation (WPF)" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 使用ReverseMarkdown库进行HTML到Markdown转换" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 支持多种中文编码格式" Style="{StaticResource FeatureText}"/>
-                        <TextBlock Text="• 异步处理确保UI响应性" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtTechDetail1" Text="• Based on Windows Presentation Foundation (WPF)" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtTechDetail2" Text="• Uses ReverseMarkdown library for HTML to Markdown conversion" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtTechDetail3" Text="• Supports multiple Chinese encoding formats" Style="{StaticResource FeatureText}"/>
+                        <TextBlock Name="txtTechDetail4" Text="• Asynchronous processing ensures UI responsiveness" Style="{StaticResource FeatureText}"/>
                     </StackPanel>
 
                     <!-- 版权信息 -->
-                    <TextBlock Text="版权信息" Style="{StaticResource SectionHeader}"/>
-                    <TextBlock Text="© 2024 MHTML转换工具. 保留所有权利。" 
+                    <TextBlock Name="txtCopyrightHeader" Text="Copyright" Style="{StaticResource SectionHeader}"/>
+                    <TextBlock Name="txtCopyright" Text="© 2024 MHTML Converter. All rights reserved." 
                               Style="{StaticResource FeatureText}" 
                               Margin="20,0,0,0"
                               FontStyle="Italic"/>
                 </StackPanel>
 
                 <!-- 关闭按钮 -->
-                <Button Name="btnClose" Content="关闭" Style="{StaticResource CloseButton}" Click="BtnClose_Click"/>
+                <Button Name="btnClose" Content="Close" Style="{StaticResource CloseButton}" Click="BtnClose_Click"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

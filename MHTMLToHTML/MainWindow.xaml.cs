@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
@@ -19,12 +20,17 @@ namespace MHTMLToHTML
     {
         private MHTMLParser parser;
         private BackgroundWorker backgroundWorker;
+        private LanguageManager languageManager;
+        private AppSettings appSettings;
 
         public MainWindow()
         {
             InitializeComponent();
             RegisterEncodingProviders();
+            InitializeLanguage();
             InitializeComponents();
+            InitializeRecentFiles();
+            LoadUserSettings();
         }
 
         /// <summary>
@@ -62,6 +68,81 @@ namespace MHTMLToHTML
         }
 
         /// <summary>
+        /// 初始化语言系统
+        /// </summary>
+        private void InitializeLanguage()
+        {
+            try
+            {
+                // 初始化语言管理器
+                languageManager = LanguageManager.Instance;
+                appSettings = AppSettings.Instance;
+                
+                // 订阅语言变更事件
+                languageManager.LanguageChanged += LanguageManager_LanguageChanged;
+                
+                // 设置窗口标题
+                this.Title = languageManager.GetString("WindowTitle");
+                
+                // 更新所有UI文本
+                UpdateUITexts();
+                
+                // 更新语言菜单选中状态
+                UpdateLanguageMenuCheckState();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"初始化语言系统失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 初始化最近文件功能
+        /// </summary>
+        private void InitializeRecentFiles()
+        {
+            try
+            {
+                // 构建最近文件菜单
+                BuildRecentFilesMenu();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"初始化最近文件功能失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 加载用户设置
+        /// </summary>
+        private void LoadUserSettings()
+        {
+            try
+            {
+                // 加载上次的输出格式设置
+                if (appSettings.LastOutputFormat == "Markdown")
+                {
+                    rbMarkdown.IsChecked = true;
+                }
+                else
+                {
+                    rbHTML.IsChecked = true;
+                }
+                
+                // 加载其他设置
+                chkIncludeImages.IsChecked = appSettings.DefaultIncludeImages;
+                chkEnhancedMarkdown.IsChecked = appSettings.DefaultEnhancedMarkdown;
+                
+                // 更新UI状态
+                UpdateUIBasedOnFormat();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"加载用户设置失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// 初始化组件
         /// </summary>
         private void InitializeComponents()
@@ -76,7 +157,7 @@ namespace MHTMLToHTML
 
             // 设置初始状态
             UpdateUI(false);
-            LogMessage("程序已启动，请选择MHTML文件开始转换。");
+            LogMessage(languageManager?.GetString("Log_ProgramStarted") ?? "程序已启动，请选择MHTML文件开始转换。");
             
             // 设置初始UI状态 - 隐藏Markdown相关选项
             UpdateUIBasedOnFormat();
@@ -106,7 +187,328 @@ namespace MHTMLToHTML
                 }
             }
             
-            LogMessage($"已注册编码支持，当前支持的编码: {string.Join(", ", supportedEncodings)}");
+            LogMessage(languageManager?.GetString("Encoding_SupportedEncodings", string.Join(", ", supportedEncodings)) ?? $"已注册编码支持，当前支持的编码: {string.Join(", ", supportedEncodings)}");
+        }
+
+        /// <summary>
+        /// 语言变更事件处理器
+        /// </summary>
+        private void LanguageManager_LanguageChanged(object sender, LanguageChangedEventArgs e)
+        {
+            try
+            {
+                // 更新窗口标题
+                this.Title = languageManager.GetString("WindowTitle");
+                
+                // 更新所有UI文本
+                UpdateUITexts();
+                
+                // 重新构建最近文件菜单
+                BuildRecentFilesMenu();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"处理语言变更事件失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 更新所有UI文本
+        /// </summary>
+        private void UpdateUITexts()
+        {
+            try
+            {
+                // 更新菜单
+                menuFile.Header = languageManager.GetString("Menu_File");
+                menuOpenFile.Header = languageManager.GetString("Menu_OpenFile");
+                menuRecentFiles.Header = languageManager.GetString("Menu_RecentFiles");
+                menuExit.Header = languageManager.GetString("Menu_Exit");
+                
+                menuTools.Header = languageManager.GetString("Menu_Tools");
+                menuBatchConvert.Header = languageManager.GetString("Menu_BatchConvert");
+                menuOptions.Header = languageManager.GetString("Menu_Options");
+                menuLanguage.Header = languageManager.GetString("Menu_Language");
+                
+                menuHelp.Header = languageManager.GetString("Menu_Help");
+                menuUsage.Header = languageManager.GetString("Menu_Usage");
+                menuAbout.Header = languageManager.GetString("Menu_About");
+                
+                // 更新语言菜单项
+                menuLanguageAuto.Header = languageManager.GetString("Language_Auto");
+                menuLanguageZhCN.Header = "简体中文";
+                menuLanguageEnUS.Header = "English";
+                
+                // 更新主标题
+                txtMainTitle.Text = languageManager.GetString("MainTitle");
+                
+                // 更新分组框
+                grpFileSelection.Header = languageManager.GetString("GroupBox_FileSelection");
+                grpOutputOptions.Header = languageManager.GetString("GroupBox_OutputOptions");
+                grpConversionLog.Header = languageManager.GetString("GroupBox_ConversionLog");
+                
+                // 更新标签
+                lblSelectMHTMLFile.Text = languageManager.GetString("Label_SelectMHTMLFile");
+                lblOutputFormat.Text = languageManager.GetString("Label_OutputFormat");
+                
+                // 更新单选按钮
+                rbHTML.Content = languageManager.GetString("RadioButton_HTMLFormat");
+                rbMarkdown.Content = languageManager.GetString("RadioButton_MarkdownFormat");
+                
+                // 更新按钮
+                btnBrowseInput.Content = languageManager.GetString("Button_Browse");
+                btnBrowseOutput.Content = languageManager.GetString("Button_Browse");
+                btnConvert.Content = languageManager.GetString("Button_StartConvert");
+                btnClear.Content = languageManager.GetString("Button_ClearLog");
+                
+                // 更新复选框
+                UpdateCheckBoxTexts();
+                
+                // 更新输出标签
+                UpdateOutputLabel();
+                
+                // 更新状态栏
+                if (string.IsNullOrEmpty(txtStatus.Text) || txtStatus.Text == "就绪" || txtStatus.Text == "Ready")
+                {
+                    txtStatus.Text = languageManager.GetString("Status_Ready");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"更新UI文本失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 更新复选框文本
+        /// </summary>
+        private void UpdateCheckBoxTexts()
+        {
+            if (rbMarkdown.IsChecked == true)
+            {
+                chkIncludeImages.Content = languageManager.GetString("CheckBox_IncludeImagesMarkdown");
+            }
+            else
+            {
+                chkIncludeImages.Content = languageManager.GetString("CheckBox_IncludeImages");
+            }
+            
+            chkEnhancedMarkdown.Content = languageManager.GetString("CheckBox_EnhancedMarkdown");
+            chkDebugMode.Content = languageManager.GetString("CheckBox_DebugMode");
+        }
+
+        /// <summary>
+        /// 更新输出标签文本
+        /// </summary>
+        private void UpdateOutputLabel()
+        {
+            if (rbMarkdown.IsChecked == true)
+            {
+                txtOutputLabel.Text = languageManager.GetString("Label_OutputMarkdownFile");
+            }
+            else
+            {
+                txtOutputLabel.Text = languageManager.GetString("Label_OutputHTMLFile");
+            }
+        }
+
+        /// <summary>
+        /// 构建最近文件菜单
+        /// </summary>
+        private void BuildRecentFilesMenu()
+        {
+            try
+            {
+                // 清空现有菜单项
+                menuRecentFiles.Items.Clear();
+                
+                // 获取有效的最近文件
+                var recentFiles = appSettings.GetValidRecentFiles();
+                
+                if (recentFiles.Count == 0)
+                {
+                    // 没有最近文件
+                    var noFilesItem = new MenuItem
+                    {
+                        Header = languageManager.GetString("Menu_NoRecentFiles"),
+                        IsEnabled = false
+                    };
+                    menuRecentFiles.Items.Add(noFilesItem);
+                }
+                else
+                {
+                    // 添加最近文件
+                    for (int i = 0; i < recentFiles.Count; i++)
+                    {
+                        var recentFile = recentFiles[i];
+                        var menuItem = new MenuItem
+                        {
+                            Header = $"{i + 1}. {recentFile.DisplayName}",
+                            Tag = recentFile.FilePath,
+                            ToolTip = recentFile.FilePath
+                        };
+                        menuItem.Click += RecentFileMenuItem_Click;
+                        menuRecentFiles.Items.Add(menuItem);
+                    }
+                    
+                    // 添加分隔线和清空选项
+                    menuRecentFiles.Items.Add(new Separator());
+                    var clearItem = new MenuItem
+                    {
+                        Header = languageManager.GetString("Menu_ClearRecentFiles")
+                    };
+                    clearItem.Click += ClearRecentFiles_Click;
+                    menuRecentFiles.Items.Add(clearItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"构建最近文件菜单失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 最近文件菜单项点击事件
+        /// </summary>
+        private void RecentFileMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is MenuItem menuItem && menuItem.Tag is string filePath)
+                {
+                    if (File.Exists(filePath))
+                    {
+                        // 设置输入文件
+                        txtInputFile.Text = filePath;
+                        
+                        // 自动生成输出文件名
+                        string extension = rbMarkdown.IsChecked == true ? ".md" : ".html";
+                        string outputFileName = System.IO.Path.ChangeExtension(filePath, extension);
+                        txtOutputFile.Text = outputFileName;
+                        
+                        // 显示文件信息
+                        FileInfo fileInfo = new FileInfo(filePath);
+                        txtFileInfo.Text = languageManager.GetString("FileSize_Format", FormatFileSize(fileInfo.Length));
+                        
+                        // 更新最近文件列表（移动到顶部）
+                        appSettings.AddRecentFile(filePath);
+                        BuildRecentFilesMenu();
+                        
+                        LogMessage(languageManager.GetString("Log_SelectedInputFile", filePath));
+                    }
+                    else
+                    {
+                        // 文件不存在，从列表中移除
+                        appSettings.RemoveRecentFile(filePath);
+                        BuildRecentFilesMenu();
+                        
+                        MessageBox.Show(
+                            languageManager.GetString("RecentFiles_FileNotFound"),
+                            languageManager.GetString("MessageBox_Warning"),
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMessage(languageManager.GetString("RecentFiles_OpenFailed", ex.Message));
+                MessageBox.Show(
+                    languageManager.GetString("RecentFiles_OpenFailed", ex.Message),
+                    languageManager.GetString("MessageBox_Error"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// 清空最近文件列表点击事件
+        /// </summary>
+        private void ClearRecentFiles_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show(
+                    languageManager.GetString("Confirm_ClearRecentFiles"),
+                    languageManager.GetString("MessageBox_Question"),
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                
+                if (result == MessageBoxResult.Yes)
+                {
+                    appSettings.ClearRecentFiles();
+                    BuildRecentFilesMenu();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"清空最近文件列表失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 语言菜单点击事件
+        /// </summary>
+        private void MenuLanguage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender is MenuItem menuItem && menuItem.Tag is string languageCode)
+                {
+                    languageManager.SetLanguage(languageCode);
+                    
+                    // 更新语言菜单的选中状态
+                    UpdateLanguageMenuCheckState();
+                    
+                    MessageBox.Show(
+                        languageManager.GetString("Language_SwitchSuccess"),
+                        languageManager.GetString("MessageBox_Information"),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    languageManager.GetString("Language_SwitchFailed", ex.Message),
+                    languageManager.GetString("MessageBox_Error"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// 更新语言菜单的选中状态
+        /// </summary>
+        private void UpdateLanguageMenuCheckState()
+        {
+            try
+            {
+                var currentLanguage = appSettings.CurrentLanguage;
+                
+                // 清除所有选中状态
+                menuLanguageAuto.IsChecked = false;
+                menuLanguageZhCN.IsChecked = false;
+                menuLanguageEnUS.IsChecked = false;
+                
+                // 设置当前语言的选中状态
+                switch (currentLanguage)
+                {
+                    case "auto":
+                        menuLanguageAuto.IsChecked = true;
+                        break;
+                    case "zh-CN":
+                        menuLanguageZhCN.IsChecked = true;
+                        break;
+                    case "en-US":
+                        menuLanguageEnUS.IsChecked = true;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"更新语言菜单选中状态失败: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -116,8 +518,8 @@ namespace MHTMLToHTML
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Title = "选择MHTML文件",
-                Filter = "MHTML文件 (*.mht;*.mhtml)|*.mht;*.mhtml|所有文件 (*.*)|*.*",
+                Title = languageManager?.GetString("FileDialog_SelectMHTMLFile") ?? "选择MHTML文件",
+                Filter = languageManager?.GetString("FileDialog_MHTMLFiles") ?? "MHTML文件 (*.mht;*.mhtml)|*.mht;*.mhtml|所有文件 (*.*)|*.*",
                 DefaultExt = ".mht"
             };
 
@@ -132,9 +534,13 @@ namespace MHTMLToHTML
                 
                 // 显示文件信息
                 FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
-                txtFileInfo.Text = $"文件大小: {FormatFileSize(fileInfo.Length)}";
+                txtFileInfo.Text = languageManager?.GetString("FileSize_Format", FormatFileSize(fileInfo.Length)) ?? $"文件大小: {FormatFileSize(fileInfo.Length)}";
                 
-                LogMessage($"已选择输入文件: {openFileDialog.FileName}");
+                // 添加到最近文件列表
+                appSettings?.AddRecentFile(openFileDialog.FileName);
+                BuildRecentFilesMenu();
+                
+                LogMessage(languageManager?.GetString("Log_SelectedInputFile", openFileDialog.FileName) ?? $"已选择输入文件: {openFileDialog.FileName}");
             }
         }
 
@@ -147,14 +553,14 @@ namespace MHTMLToHTML
             
             if (rbMarkdown.IsChecked == true)
             {
-                saveFileDialog.Title = "保存Markdown文件";
-                saveFileDialog.Filter = "Markdown文件 (*.md)|*.md|所有文件 (*.*)|*.*";
+                saveFileDialog.Title = languageManager?.GetString("FileDialog_SaveMarkdownFile") ?? "保存Markdown文件";
+                saveFileDialog.Filter = languageManager?.GetString("FileDialog_MarkdownFiles") ?? "Markdown文件 (*.md)|*.md|所有文件 (*.*)|*.*";
                 saveFileDialog.DefaultExt = ".md";
             }
             else
             {
-                saveFileDialog.Title = "保存HTML文件";
-                saveFileDialog.Filter = "HTML文件 (*.html)|*.html|所有文件 (*.*)|*.*";
+                saveFileDialog.Title = languageManager?.GetString("FileDialog_SaveHTMLFile") ?? "保存HTML文件";
+                saveFileDialog.Filter = languageManager?.GetString("FileDialog_HTMLFiles") ?? "HTML文件 (*.html)|*.html|所有文件 (*.*)|*.*";
                 saveFileDialog.DefaultExt = ".html";
             }
 
@@ -168,7 +574,7 @@ namespace MHTMLToHTML
             if (saveFileDialog.ShowDialog() == true)
             {
                 txtOutputFile.Text = saveFileDialog.FileName;
-                LogMessage($"已设置输出文件: {saveFileDialog.FileName}");
+                LogMessage(languageManager?.GetString("Log_SetOutputFile", saveFileDialog.FileName) ?? $"已设置输出文件: {saveFileDialog.FileName}");
             }
         }
 
@@ -189,7 +595,8 @@ namespace MHTMLToHTML
 
             if (rbMarkdown.IsChecked == true)
             {
-                txtOutputLabel.Text = "输出Markdown文件:";
+                // 更新输出标签
+                UpdateOutputLabel();
                 
                 // 显示Markdown相关选项
                 if (chkEnhancedMarkdown != null)
@@ -202,10 +609,7 @@ namespace MHTMLToHTML
                 }
                 
                 // 更新包含图片选项的描述
-                if (chkIncludeImages != null)
-                {
-                    chkIncludeImages.Content = "包含图片（作为base64编码）";
-                }
+                UpdateCheckBoxTexts();
                 
                 // 如果当前有输出文件路径，更新扩展名
                 if (!string.IsNullOrEmpty(txtOutputFile.Text))
@@ -213,10 +617,18 @@ namespace MHTMLToHTML
                     string newPath = System.IO.Path.ChangeExtension(txtOutputFile.Text, ".md");
                     txtOutputFile.Text = newPath;
                 }
+                
+                // 保存设置
+                if (appSettings != null)
+                {
+                    appSettings.LastOutputFormat = "Markdown";
+                    appSettings.Save();
+                }
             }
             else
             {
-                txtOutputLabel.Text = "输出HTML文件:";
+                // 更新输出标签
+                UpdateOutputLabel();
                 
                 // 隐藏Markdown相关选项
                 if (chkEnhancedMarkdown != null)
@@ -229,16 +641,20 @@ namespace MHTMLToHTML
                 }
                 
                 // 更新包含图片选项的描述
-                if (chkIncludeImages != null)
-                {
-                    chkIncludeImages.Content = "包含图片（嵌入HTML中）";
-                }
+                UpdateCheckBoxTexts();
                 
                 // 如果当前有输出文件路径，更新扩展名
                 if (!string.IsNullOrEmpty(txtOutputFile.Text))
                 {
                     string newPath = System.IO.Path.ChangeExtension(txtOutputFile.Text, ".html");
                     txtOutputFile.Text = newPath;
+                }
+                
+                // 保存设置
+                if (appSettings != null)
+                {
+                    appSettings.LastOutputFormat = "HTML";
+                    appSettings.Save();
                 }
             }
         }
@@ -260,7 +676,7 @@ namespace MHTMLToHTML
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             txtLog.Clear();
-            LogMessage("日志已清空。");
+            LogMessage(languageManager?.GetString("Log_LogCleared") ?? "日志已清空。");
         }
 
         /// <summary>
@@ -289,7 +705,7 @@ namespace MHTMLToHTML
                         FileInfo fileInfo = new FileInfo(file);
                         txtFileInfo.Text = $"文件大小: {FormatFileSize(fileInfo.Length)}";
                         
-                        LogMessage($"已拖放输入文件: {file}");
+                        LogMessage(languageManager?.GetString("Log_DroppedInputFile", file) ?? $"已拖放输入文件: {file}");
                     }
                     else
                     {
@@ -364,7 +780,7 @@ namespace MHTMLToHTML
             }
             catch (Exception ex)
             {
-                LogMessage($"打开批量转换窗口失败: {ex.Message}");
+                LogMessage(languageManager?.GetString("Error_OpenBatchWindow", ex.Message) ?? $"打开批量转换窗口失败: {ex.Message}");
                 MessageBox.Show($"打开批量转换窗口失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -382,7 +798,8 @@ namespace MHTMLToHTML
         /// </summary>
         private void MenuHelp_Click(object sender, RoutedEventArgs e)
         {
-            string helpMessage = "MHTML转HTML/Markdown工具使用说明：\n\n" +
+            string helpMessage = languageManager?.GetString("Help_Usage") ?? 
+                "MHTML转HTML/Markdown工具使用说明：\n\n" +
                 "1. 选择文件：\n" +
                 "   - 点击\"浏览...\"按钮选择MHTML文件\n" +
                 "   - 或者直接拖放.mht/.mhtml文件到输入框\n\n" +
@@ -404,7 +821,10 @@ namespace MHTMLToHTML
                 "   - Ctrl+O：打开文件\n" +
                 "   - Alt+F4：退出程序";
 
-            MessageBox.Show(helpMessage, "使用说明", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(helpMessage, 
+                languageManager?.GetString("Menu_Usage") ?? "使用说明", 
+                MessageBoxButton.OK, 
+                MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -420,7 +840,7 @@ namespace MHTMLToHTML
             }
             catch (Exception ex)
             {
-                LogMessage($"打开关于窗口失败: {ex.Message}");
+                LogMessage(languageManager?.GetString("Error_OpenAboutWindow", ex.Message) ?? $"打开关于窗口失败: {ex.Message}");
                 MessageBox.Show($"打开关于窗口失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -490,7 +910,7 @@ namespace MHTMLToHTML
 
             // 更新UI状态
             UpdateUI(true);
-            LogMessage("开始转换...");
+            LogMessage(languageManager?.GetString("Process_StartConvert") ?? "开始转换...");
 
             // 启动后台工作
             backgroundWorker.RunWorkerAsync(parameters);
@@ -591,8 +1011,8 @@ namespace MHTMLToHTML
                 {
                     txtStatus.Text = "转换成功完成";
                     string fileType = System.IO.Path.GetExtension(result.OutputFile).ToLower() == ".md" ? "Markdown" : "HTML";
-                    LogMessage($"转换成功！{fileType}文件已保存到: {result.OutputFile}");
-                    LogMessage("=== 解析器日志 ===");
+                    LogMessage(languageManager?.GetString("Log_ConvertSuccess", fileType, result.OutputFile) ?? $"转换成功！{fileType}文件已保存到: {result.OutputFile}");
+                    LogMessage(languageManager?.GetString("Log_ParserLog") ?? "=== 解析器日志 ===");
                     LogMessage(result.Log);
                     
                     // 询问是否打开输出文件
@@ -621,10 +1041,10 @@ namespace MHTMLToHTML
                 else
                 {
                     txtStatus.Text = "转换失败";
-                    LogMessage($"转换失败: {result.ErrorMessage}");
+                    LogMessage(languageManager?.GetString("Log_ConvertFailed", result.ErrorMessage) ?? $"转换失败: {result.ErrorMessage}");
                     if (!string.IsNullOrEmpty(result.Log))
                     {
-                        LogMessage("=== 解析器日志 ===");
+                        LogMessage(languageManager?.GetString("Log_ParserLog") ?? "=== 解析器日志 ===");
                         LogMessage(result.Log);
                     }
                     
@@ -692,14 +1112,14 @@ namespace MHTMLToHTML
                         // 检查是否包含MHTML特有的标识
                         if (content.Contains("MIME-Version") && content.Contains("Content-Type"))
                         {
-                            LogMessage($"使用编码 {encoding.EncodingName} 成功读取文件");
+                            LogMessage(languageManager?.GetString("Encoding_ReadWithEncoding", encoding.EncodingName) ?? $"使用编码 {encoding.EncodingName} 成功读取文件");
                             
                             // 尝试从内容中获取charset信息
                             string detectedCharset = DetectCharsetFromContent(content);
                             if (!string.IsNullOrEmpty(detectedCharset) && 
                                 !string.Equals(detectedCharset, encoding.WebName, StringComparison.OrdinalIgnoreCase))
                             {
-                                LogMessage($"检测到文件内部声明的字符集: {detectedCharset}");
+                                LogMessage(languageManager?.GetString("Encoding_DetectedCharset", detectedCharset) ?? $"检测到文件内部声明的字符集: {detectedCharset}");
                                 
                                 Encoding detectedEncoding = TryGetEncodingByName(detectedCharset);
                                 if (detectedEncoding != null)
@@ -711,18 +1131,18 @@ namespace MHTMLToHTML
                                         using (StreamReader reReader = new StreamReader(fs, detectedEncoding))
                                         {
                                             string reReadContent = reReader.ReadToEnd();
-                                            LogMessage($"使用检测到的编码 {detectedEncoding.EncodingName} 重新读取成功");
+                                            LogMessage(languageManager?.GetString("Encoding_RereadSuccess", detectedEncoding.EncodingName) ?? $"使用检测到的编码 {detectedEncoding.EncodingName} 重新读取成功");
                                             return reReadContent;
                                         }
                                     }
                                     catch (Exception ex)
                                     {
-                                        LogMessage($"使用检测到的编码重新读取失败: {ex.Message}，继续使用原编码");
+                                        LogMessage(languageManager?.GetString("Encoding_RereadFailed", ex.Message) ?? $"使用检测到的编码重新读取失败: {ex.Message}，继续使用原编码");
                                     }
                                 }
                                 else
                                 {
-                                    LogMessage($"检测到的编码 {detectedCharset} 不受支持，使用当前编码");
+                                    LogMessage(languageManager?.GetString("Encoding_UnsupportedDetected", detectedCharset) ?? $"检测到的编码 {detectedCharset} 不受支持，使用当前编码");
                                 }
                             }
                             
@@ -733,12 +1153,12 @@ namespace MHTMLToHTML
                 catch (Exception ex)
                 {
                     // 如果当前编码失败，尝试下一个编码
-                    LogMessage($"使用编码 {encoding.EncodingName} 读取失败: {ex.Message}");
+                    LogMessage(languageManager?.GetString("Encoding_ReadFailed", encoding.EncodingName, ex.Message) ?? $"使用编码 {encoding.EncodingName} 读取失败: {ex.Message}");
                 }
             }
             
             // 如果所有编码都失败，使用UTF-8作为最后的选择
-            LogMessage("所有编码尝试失败，使用UTF-8进行最后尝试");
+            LogMessage(languageManager?.GetString("Encoding_AllFailed") ?? "所有编码尝试失败，使用UTF-8进行最后尝试");
             return File.ReadAllText(filePath, Encoding.UTF8);
         }
 
@@ -812,43 +1232,43 @@ namespace MHTMLToHTML
             {
                 if (debugMode)
                 {
-                    LogMessage($"开始HTML到Markdown转换，内容长度: {htmlContent?.Length ?? 0}");
+                    LogMessage(languageManager?.GetString("Log_HTMLToMarkdownStart", htmlContent?.Length ?? 0) ?? $"开始HTML到Markdown转换，内容长度: {htmlContent?.Length ?? 0}");
                     if (!string.IsNullOrEmpty(htmlContent))
                     {
-                        LogMessage($"前100个字符: {htmlContent.Substring(0, Math.Min(100, htmlContent.Length))}...");
+                        LogMessage(languageManager?.GetString("Log_HTMLToMarkdownPreview", htmlContent.Substring(0, Math.Min(100, htmlContent.Length))) ?? $"前100个字符: {htmlContent.Substring(0, Math.Min(100, htmlContent.Length))}...");
                     }
                 }
                 
                 if (useEnhancedProcessing)
                 {
-                    if (debugMode) LogMessage("使用增强Markdown处理");
+                    if (debugMode) LogMessage(languageManager?.GetString("Log_EnhancedMarkdownProcessing") ?? "使用增强Markdown处理");
                     
                     // 尝试使用自定义转换器
-                    if (debugMode) LogMessage("尝试使用自定义HTML到Markdown转换器");
+                    if (debugMode) LogMessage(languageManager?.GetString("Log_TryCustomConverter") ?? "尝试使用自定义HTML到Markdown转换器");
                     string customResult = CustomHtmlToMarkdown(htmlContent, debugMode);
                     if (!string.IsNullOrEmpty(customResult))
                     {
-                        if (debugMode) LogMessage("自定义转换器成功");
+                        if (debugMode) LogMessage(languageManager?.GetString("Log_CustomConverterSuccess") ?? "自定义转换器成功");
                         return customResult;
                     }
                     
-                    if (debugMode) LogMessage("自定义转换器失败，尝试ReverseMarkdown库");
+                    if (debugMode) LogMessage(languageManager?.GetString("Log_CustomConverterFailed") ?? "自定义转换器失败，尝试ReverseMarkdown库");
                     // 预处理HTML内容
                     htmlContent = PreprocessHtmlForMarkdown(htmlContent);
                 }
                 else
                 {
-                    if (debugMode) LogMessage("使用基础Markdown处理");
+                    if (debugMode) LogMessage(languageManager?.GetString("Log_BasicMarkdownProcessing") ?? "使用基础Markdown处理");
                 }
 
                 // 配置ReverseMarkdown转换器
-                if (debugMode) LogMessage("配置ReverseMarkdown转换器");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_ConfiguringReverseMarkdown") ?? "配置ReverseMarkdown转换器");
                 var config = new ReverseMarkdown.Config();
                 
                 var converter = new ReverseMarkdown.Converter(config);
                 string markdownContent = converter.Convert(htmlContent);
                 
-                if (debugMode) LogMessage($"ReverseMarkdown转换完成，结果长度: {markdownContent?.Length ?? 0}");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_ReverseMarkdownCompleted", markdownContent?.Length ?? 0) ?? $"ReverseMarkdown转换完成，结果长度: {markdownContent?.Length ?? 0}");
 
                 if (useEnhancedProcessing)
                 {
@@ -861,13 +1281,13 @@ namespace MHTMLToHTML
                     markdownContent = BasicCleanupMarkdown(markdownContent);
                 }
 
-                if (debugMode) LogMessage("HTML到Markdown转换完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_HTMLToMarkdownCompleted") ?? "HTML到Markdown转换完成");
                 return markdownContent;
             }
             catch (Exception ex)
             {
-                LogMessage($"HTML到Markdown转换失败: {ex.Message}");
-                if (debugMode) LogMessage($"错误详情: {ex.StackTrace}");
+                LogMessage(languageManager?.GetString("Log_HTMLToMarkdownError", ex.Message) ?? $"HTML到Markdown转换失败: {ex.Message}");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_ErrorDetails", ex.StackTrace) ?? $"错误详情: {ex.StackTrace}");
                 // 如果转换失败，返回基础的文本内容
                 return ExtractTextFromHtml(htmlContent);
             }
@@ -886,52 +1306,52 @@ namespace MHTMLToHTML
 
             try
             {
-                if (debugMode) LogMessage("开始自定义HTML到Markdown转换");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_CustomConversionStart") ?? "开始自定义HTML到Markdown转换");
                 
                 // 保存原始HTML长度用于调试
                 int originalLength = html.Length;
                 
                 // 1. 清理HTML
                 html = CleanHtmlForMarkdown(html);
-                if (debugMode) LogMessage($"HTML清理完成，长度从 {originalLength} 变为 {html.Length}");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_HTMLCleanupCompleted", originalLength, html.Length) ?? $"HTML清理完成，长度从 {originalLength} 变为 {html.Length}");
                 
                 // 2. 转换结构元素
                 html = ConvertStructuralElements(html);
-                if (debugMode) LogMessage("结构元素转换完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_StructuralElementsCompleted") ?? "结构元素转换完成");
                 
                 // 3. 转换格式元素
                 html = ConvertFormattingElements(html);
-                if (debugMode) LogMessage("格式元素转换完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_FormattingElementsCompleted") ?? "格式元素转换完成");
                 
                 // 4. 转换列表
                 html = ConvertListElements(html);
-                if (debugMode) LogMessage("列表转换完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_ListElementsCompleted") ?? "列表转换完成");
                 
                 // 5. 转换表格
                 html = ConvertTableElements(html);
-                if (debugMode) LogMessage("表格转换完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_TableElementsCompleted") ?? "表格转换完成");
                 
                 // 6. 转换链接和图片
                 html = ConvertLinksAndImages(html);
-                if (debugMode) LogMessage("链接和图片转换完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_LinksAndImagesCompleted") ?? "链接和图片转换完成");
                 
                 // 7. 移除剩余的HTML标签
                 html = RemoveRemainingHtmlTags(html);
-                if (debugMode) LogMessage("剩余HTML标签移除完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_RemainingHTMLTagsCompleted") ?? "剩余HTML标签移除完成");
                 
                 // 8. 解码HTML实体
                 html = System.Net.WebUtility.HtmlDecode(html);
-                if (debugMode) LogMessage("HTML实体解码完成");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_HTMLEntityDecodeCompleted") ?? "HTML实体解码完成");
                 
                 // 9. 最终清理
                 html = FinalCleanup(html);
-                if (debugMode) LogMessage($"最终清理完成，最终长度: {html.Length}");
+                if (debugMode) LogMessage(languageManager?.GetString("Log_FinalCleanupCompleted", html.Length) ?? $"最终清理完成，最终长度: {html.Length}");
                 
                 return html;
             }
             catch (Exception ex)
             {
-                LogMessage($"自定义HTML到Markdown转换失败: {ex.Message}");
+                LogMessage(languageManager?.GetString("Log_CustomConversionError", ex.Message) ?? $"自定义HTML到Markdown转换失败: {ex.Message}");
                 return string.Empty;
             }
         }
@@ -1779,12 +2199,12 @@ namespace MHTMLToHTML
                 // 处理列表，确保列表格式正确
                 html = PreprocessLists(html);
 
-                LogMessage("HTML预处理完成");
+                LogMessage(languageManager?.GetString("Log_HTMLPreprocessCompleted") ?? "HTML预处理完成");
                 return html;
             }
             catch (Exception ex)
             {
-                LogMessage($"HTML预处理失败: {ex.Message}");
+                LogMessage(languageManager?.GetString("Log_HTMLPreprocessError", ex.Message) ?? $"HTML预处理失败: {ex.Message}");
                 return html;
             }
         }
@@ -1873,12 +2293,12 @@ namespace MHTMLToHTML
                 if (!markdown.EndsWith("\n"))
                     markdown += "\n";
 
-                LogMessage("Markdown内容清理完成");
+                LogMessage(languageManager?.GetString("Log_MarkdownCleanupCompleted") ?? "Markdown内容清理完成");
                 return markdown;
             }
             catch (Exception ex)
             {
-                LogMessage($"Markdown清理失败: {ex.Message}");
+                LogMessage(languageManager?.GetString("Log_MarkdownCleanupError", ex.Message) ?? $"Markdown清理失败: {ex.Message}");
                 return markdown;
             }
         }
@@ -2012,7 +2432,7 @@ namespace MHTMLToHTML
 
             try
             {
-                LogMessage("使用备用方法进行HTML到Markdown转换");
+                LogMessage(languageManager?.GetString("Log_FallbackConversion") ?? "使用备用方法进行HTML到Markdown转换");
                 
                 // 移除脚本和样式标签及其内容
                 html = System.Text.RegularExpressions.Regex.Replace(html, @"<(script|style)[^>]*>.*?</\1>", "", 
@@ -2103,12 +2523,12 @@ namespace MHTMLToHTML
                 // 清理格式
                 html = CleanupMarkdown(html);
                 
-                LogMessage("备用HTML到Markdown转换完成");
+                LogMessage(languageManager?.GetString("Log_FallbackConversionCompleted") ?? "备用HTML到Markdown转换完成");
                 return html;
             }
             catch (Exception ex)
             {
-                LogMessage($"备用转换失败: {ex.Message}");
+                LogMessage(languageManager?.GetString("Log_FallbackConversionError", ex.Message) ?? $"备用转换失败: {ex.Message}");
                 // 如果所有处理都失败，返回清理后的纯文本
                 return CleanupPlainText(html);
             }

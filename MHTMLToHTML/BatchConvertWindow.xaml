@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="批量转换MHTML文件" Height="650" Width="1000"
+        Title="Batch Convert MHTML Files" Height="650" Width="1000"
         WindowStartupLocation="CenterOwner"
         ResizeMode="CanResize">
     
@@ -61,14 +61,14 @@
         </Grid.RowDefinitions>
         
         <!-- 标题 -->
-        <TextBlock Grid.Row="0" Text="批量转换MHTML文件" 
+        <TextBlock Grid.Row="0" Name="txtBatchTitle" Text="Batch Convert MHTML Files" 
                    FontSize="24" FontWeight="Bold" 
                    Foreground="#007ACC" 
                    HorizontalAlignment="Center" 
                    Margin="0,0,0,20"/>
         
         <!-- 文件选择区域 -->
-        <GroupBox Grid.Row="1" Header="文件选择" Margin="0,0,0,15">
+        <GroupBox Grid.Row="1" Name="grpFileSelection" Header="File Selection" Margin="0,0,0,15">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -77,15 +77,15 @@
                 </Grid.RowDefinitions>
                 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
-                    <Button Name="btnAddFiles" Content="添加文件..." 
+                    <Button Name="btnAddFiles" Content="Add Files..." 
                             Style="{StaticResource ModernButton}" 
                             Click="BtnAddFiles_Click" 
                             Margin="0,0,10,0"/>
-                    <Button Name="btnAddFolder" Content="添加文件夹..." 
+                    <Button Name="btnAddFolder" Content="Add Folder..." 
                             Style="{StaticResource ModernButton}" 
                             Click="BtnAddFolder_Click" 
                             Margin="0,0,10,0"/>
-                    <Button Name="btnClearFiles" Content="清空列表" 
+                    <Button Name="btnClearFiles" Content="Clear List" 
                             Style="{StaticResource ModernButton}" 
                             Background="#DC3545" 
                             Click="BtnClearFiles_Click"/>
@@ -99,16 +99,16 @@
                           BorderBrush="#CCCCCC">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="文件名" Width="300" DisplayMemberBinding="{Binding FileName}"/>
-                            <GridViewColumn Header="文件大小" Width="100" DisplayMemberBinding="{Binding FileSize}"/>
-                            <GridViewColumn Header="状态" Width="150" DisplayMemberBinding="{Binding Status}"/>
-                            <GridViewColumn Header="完整路径" Width="400" DisplayMemberBinding="{Binding FullPath}"/>
+                            <GridViewColumn Header="File Name" Width="300" DisplayMemberBinding="{Binding FileName}"/>
+                            <GridViewColumn Header="File Size" Width="100" DisplayMemberBinding="{Binding FileSize}"/>
+                            <GridViewColumn Header="Status" Width="150" DisplayMemberBinding="{Binding Status}"/>
+                            <GridViewColumn Header="Full Path" Width="400" DisplayMemberBinding="{Binding FullPath}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
                 
                 <TextBlock Grid.Row="2" Name="txtFileCount" 
-                          Text="已选择 0 个文件" 
+                          Text="0 files selected" 
                           FontSize="12" 
                           Foreground="#666666" 
                           Margin="0,5,0,0"/>
@@ -116,7 +116,7 @@
         </GroupBox>
         
         <!-- 输出设置区域 -->
-        <GroupBox Grid.Row="2" Header="输出设置" Margin="0,0,0,15">
+        <GroupBox Grid.Row="2" Name="grpOutputSettings" Header="Output Settings" Margin="0,0,0,15">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -128,13 +128,13 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-                          Text="输出目录:" Style="{StaticResource HeaderText}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="txtOutputDirectoryLabel"
+                          Text="Output Directory:" Style="{StaticResource HeaderText}"/>
                 <TextBox Grid.Row="1" Grid.Column="0" Name="txtOutputDir" 
                          Height="32" Padding="8" BorderThickness="1" BorderBrush="#CCCCCC" 
                          Margin="0,0,10,0"/>
                 <Button Grid.Row="1" Grid.Column="1" Name="btnBrowseOutputDir" 
-                        Content="浏览..." 
+                        Content="Browse..." 
                         Style="{StaticResource ModernButton}" 
                         Click="BtnBrowseOutputDir_Click"/>
                 
@@ -142,7 +142,7 @@
                 <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                            Orientation="Horizontal" Margin="0,15,0,0">
                     <StackPanel Orientation="Vertical" Margin="0,0,30,0">
-                        <TextBlock Text="输出格式:" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBlock Name="txtOutputFormatLabel" Text="Output Format:" FontWeight="Bold" Margin="0,0,0,5"/>
                         <StackPanel Orientation="Horizontal">
                             <RadioButton Name="rbBatchHTML" Content="HTML" IsChecked="True" Margin="0,0,20,0" 
                                         FontSize="12" Checked="BatchOutputFormat_Changed"/>
@@ -152,20 +152,20 @@
                     </StackPanel>
                     
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="转换选项:" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBlock Name="txtConvertOptionsLabel" Text="Convert Options:" FontWeight="Bold" Margin="0,0,0,5"/>
                         <CheckBox Name="chkBatchIncludeImages" 
-                                  Content="包含图片（嵌入HTML中）" 
+                                  Content="Include images (embedded in HTML)" 
                                   IsChecked="True" 
                                   FontSize="12" 
                                   Margin="0,0,0,5"/>
                         <CheckBox Name="chkBatchEnhancedMarkdown" 
-                                  Content="增强Markdown格式处理" 
+                                  Content="Enhanced Markdown processing" 
                                   IsChecked="True" 
                                   FontSize="12"
                                   Visibility="Collapsed"
                                   Margin="0,0,0,5"/>
                         <CheckBox Name="chkBatchDebugMode" 
-                                  Content="调试模式" 
+                                  Content="Debug mode" 
                                   IsChecked="False" 
                                   FontSize="12"
                                   Visibility="Collapsed"/>
@@ -175,7 +175,7 @@
         </GroupBox>
         
         <!-- 进度和日志区域 -->
-        <GroupBox Grid.Row="3" Header="转换进度和日志">
+        <GroupBox Grid.Row="3" Name="grpProgressAndLog" Header="Conversion Progress and Log">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -185,66 +185,44 @@
                 
                 <!-- 总体进度 -->
                 <StackPanel Grid.Row="0" Margin="0,0,0,10">
-                    <TextBlock Name="txtOverallProgress" Text="准备就绪" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBlock Name="txtOverallProgress" Text="Ready" FontWeight="Bold" Margin="0,0,0,5"/>
                     <ProgressBar Name="progressOverall" Height="20" Minimum="0" Maximum="100" Value="0"/>
                 </StackPanel>
                 
                 <!-- 当前文件进度 -->
                 <StackPanel Grid.Row="1" Margin="0,0,0,10">
-                    <TextBlock Name="txtCurrentFile" Text="当前文件：无" FontSize="12" Margin="0,0,0,5"/>
+                    <TextBlock Name="txtCurrentFile" Text="Current File: None" FontSize="12" Margin="0,0,0,5"/>
                     <ProgressBar Name="progressCurrent" Height="15" Minimum="0" Maximum="100" Value="0"/>
                 </StackPanel>
                 
                 <!-- 日志 -->
                 <ScrollViewer Grid.Row="2">
                     <TextBox Name="txtBatchLog" 
-                             TextWrapping="Wrap" 
                              IsReadOnly="True" 
-                             Background="#F8F9FA" 
-                             BorderThickness="0" 
-                             FontFamily="Consolas" 
-                             FontSize="11" 
-                             VerticalScrollBarVisibility="Auto"/>
+                             TextWrapping="Wrap" 
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             FontFamily="Consolas"
+                             FontSize="11"
+                             Background="#F8F9FA"
+                             BorderThickness="1"
+                             BorderBrush="#CCCCCC"
+                             Padding="10"/>
                 </ScrollViewer>
             </Grid>
         </GroupBox>
         
-        <!-- 操作按钮 -->
-        <StackPanel Grid.Row="4" Orientation="Horizontal" 
-                   HorizontalAlignment="Center" Margin="0,15,0,0">
-            <Button Name="btnStartBatch" 
-                    Content="开始批量转换" 
+        <!-- 操作按钮区域 -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <Button Name="btnStartBatch" Content="Start Batch Convert" 
                     Style="{StaticResource ModernButton}" 
                     Click="BtnStartBatch_Click" 
-                    Margin="0,0,10,0"/>
-            <Button Name="btnStopBatch" 
-                    Content="停止转换" 
+                    Margin="0,0,15,0"/>
+            <Button Name="btnStopBatch" Content="Stop Convert" 
                     Style="{StaticResource ModernButton}" 
                     Background="#DC3545" 
                     Click="BtnStopBatch_Click" 
-                    IsEnabled="False"
-                    Margin="0,0,10,0"/>
-            <Button Name="btnClearLog" 
-                    Content="清空日志" 
-                    Style="{StaticResource ModernButton}" 
-                    Background="#6C757D" 
-                    Click="BtnClearLog_Click"
-                    Margin="0,0,10,0"/>
-            <Button Name="btnClose" 
-                    Content="关闭" 
-                    Style="{StaticResource ModernButton}" 
-                    Background="#6C757D" 
-                    Click="BtnClose_Click"/>
+                    IsEnabled="False"/>
         </StackPanel>
-        
-        <!-- 状态栏 -->
-        <StatusBar Grid.Row="5" Margin="0,10,0,0">
-            <StatusBarItem>
-                <TextBlock Name="txtBatchStatus" Text="就绪"/>
-            </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Name="txtBatchStats" Text=""/>
-            </StatusBarItem>
-        </StatusBar>
     </Grid>
 </Window> 

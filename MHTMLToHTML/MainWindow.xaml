@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MHTMLToHTML"
         mc:Ignorable="d"
-        Title="MHTML转HTML工具" Height="600" Width="900"
+        Title="MHTML转HTML/Markdown工具"
+        Height="600" Width="900"
         WindowStartupLocation="CenterScreen" >
     
     <Window.CommandBindings>
@@ -71,22 +72,29 @@
         
         <!-- 菜单栏 -->
         <Menu Grid.Row="0" Background="White" BorderBrush="#E0E0E0" BorderThickness="0,0,0,1">
-            <MenuItem Header="文件(_F)">
-                <MenuItem Header="打开MHTML文件(_O)" Name="menuOpenFile" Click="MenuOpenFile_Click" InputGestureText="Ctrl+O"/>
+            <MenuItem Name="menuFile" Header="文件">
+                <MenuItem Name="menuOpenFile" Header="打开文件" Click="MenuOpenFile_Click" InputGestureText="Ctrl+O"/>
                 <Separator/>
-                <MenuItem Header="最近打开" Name="menuRecentFiles"/>
+                <MenuItem Name="menuRecentFiles" Header="最近打开的文件"/>
                 <Separator/>
-                <MenuItem Header="退出(_X)" Name="menuExit" Click="MenuExit_Click" InputGestureText="Alt+F4"/>
+                <MenuItem Name="menuExit" Header="退出" Click="MenuExit_Click" InputGestureText="Alt+F4"/>
             </MenuItem>
-            <MenuItem Header="工具(_T)">
-                <MenuItem Header="批量转换(_B)" Name="menuBatchConvert" Click="MenuBatchConvert_Click"/>
+            <MenuItem Name="menuTools" Header="工具">
+                <MenuItem Name="menuBatchConvert" Header="批量转换" Click="MenuBatchConvert_Click"/>
                 <Separator/>
-                <MenuItem Header="选项(_O)" Name="menuOptions" Click="MenuOptions_Click"/>
+                <MenuItem Name="menuOptions" Header="选项" Click="MenuOptions_Click"/>
+                <Separator/>
+                <MenuItem Name="menuLanguage" Header="语言">
+                    <MenuItem Name="menuLanguageAuto" Header="自动检测" Click="MenuLanguage_Click" Tag="auto"/>
+                    <Separator/>
+                    <MenuItem Name="menuLanguageZhCN" Header="简体中文" Click="MenuLanguage_Click" Tag="zh-CN"/>
+                    <MenuItem Name="menuLanguageEnUS" Header="English" Click="MenuLanguage_Click" Tag="en-US"/>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="帮助(_H)">
-                <MenuItem Header="使用说明(_H)" Name="menuHelp" Click="MenuHelp_Click"/>
+            <MenuItem Name="menuHelp" Header="帮助">
+                <MenuItem Name="menuUsage" Header="使用说明" Click="MenuHelp_Click"/>
                 <Separator/>
-                <MenuItem Header="关于(_A)" Name="menuAbout" Click="MenuAbout_Click"/>
+                <MenuItem Name="menuAbout" Header="关于" Click="MenuAbout_Click"/>
             </MenuItem>
         </Menu>
         
@@ -103,14 +111,15 @@
             </Grid.RowDefinitions>
         
         <!-- 标题区域 -->
-        <TextBlock Grid.Row="0" Text="MHTML到HTML转换工具" 
+        <TextBlock Grid.Row="0" Name="txtMainTitle"
+                   Text="MHTML 转 HTML/Markdown 工具"
                    FontSize="24" FontWeight="Bold" 
                    Foreground="#007ACC" 
                    HorizontalAlignment="Center" 
                    Margin="0,0,0,20"/>
         
         <!-- 文件选择区域 -->
-        <GroupBox Grid.Row="1" Header="文件选择" Margin="0,0,0,15">
+        <GroupBox Grid.Row="1" Name="grpFileSelection" Header="文件选择" Margin="0,0,0,15">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -121,7 +130,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="选择MHTML文件:" Style="{StaticResource HeaderText}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Name="lblSelectMHTMLFile" Text="选择MHTML文件:" Style="{StaticResource HeaderText}"/>
                         <TextBox Grid.Row="1" Grid.Column="0" Name="txtInputFile" 
                  Style="{StaticResource ModernTextBox}" 
                  IsReadOnly="True" 
@@ -130,14 +139,14 @@
                  Drop="TxtInputFile_Drop"
                  DragOver="TxtInputFile_DragOver"/>
                 <Button Grid.Row="1" Grid.Column="1" Name="btnBrowseInput" 
-                        Content="浏览..." 
+                        Content="浏览..."
                         Style="{StaticResource ModernButton}" 
                         Click="BtnBrowseInput_Click"/>
             </Grid>
         </GroupBox>
         
         <!-- 输出选择区域 -->
-        <GroupBox Grid.Row="2" Header="输出选项" Margin="0,0,0,15">
+        <GroupBox Grid.Row="2" Name="grpOutputOptions" Header="输出选项" Margin="0,0,0,15">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -152,7 +161,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <!-- 输出格式选择 -->
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="输出格式:" Style="{StaticResource HeaderText}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="lblOutputFormat" Text="输出格式:" Style="{StaticResource HeaderText}"/>
                 <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10">
                     <RadioButton Name="rbHTML" Content="HTML格式" IsChecked="True" Margin="0,0,20,0" 
                                  FontSize="12" Checked="OutputFormat_Changed"/>
@@ -160,28 +169,28 @@
                                  FontSize="12" Checked="OutputFormat_Changed"/>
                 </StackPanel>
                 
-                <TextBlock Grid.Row="2" Grid.Column="0" Name="txtOutputLabel" Text="输出HTML文件:" Style="{StaticResource HeaderText}"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Name="txtOutputLabel" Text="输出文件:" Style="{StaticResource HeaderText}"/>
                 <TextBox Grid.Row="3" Grid.Column="0" Name="txtOutputFile" 
                          Style="{StaticResource ModernTextBox}" 
                          Margin="0,0,10,0"/>
                 <Button Grid.Row="3" Grid.Column="1" Name="btnBrowseOutput" 
-                        Content="浏览..." 
+                        Content="浏览..."
                         Style="{StaticResource ModernButton}" 
                         Click="BtnBrowseOutput_Click"/>
                 
                 <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Margin="0,10,0,0">
                     <CheckBox Name="chkIncludeImages" 
-                              Content="包含图片（作为base64编码）" 
+                              Content="包含图片（嵌入HTML中）"
                               IsChecked="True" 
                               FontSize="12"/>
                     <CheckBox Name="chkEnhancedMarkdown" 
-                              Content="增强Markdown格式处理（推荐）" 
+                              Content="增强Markdown处理"
                               IsChecked="True" 
                               Margin="0,5,0,0"
                               FontSize="12"
                               Visibility="Collapsed"/>
                     <CheckBox Name="chkDebugMode" 
-                              Content="调试模式（显示详细转换日志）" 
+                              Content="调试模式"
                               IsChecked="False" 
                               Margin="0,5,0,0"
                               FontSize="12"
@@ -193,12 +202,12 @@
         <!-- 转换按钮区域 -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
             <Button Name="btnConvert" 
-                    Content="开始转换" 
+                    Content="开始转换"
                     Style="{StaticResource ModernButton}" 
                     Click="BtnConvert_Click" 
                     Margin="0,0,10,0"/>
             <Button Name="btnClear" 
-                    Content="清空日志" 
+                    Content="清空日志"
                     Style="{StaticResource ModernButton}" 
                     Background="#6C757D" 
                     Click="BtnClear_Click"/>
@@ -211,7 +220,7 @@
                      Visibility="Collapsed"/>
         
         <!-- 日志显示区域 -->
-        <GroupBox Grid.Row="5" Header="转换日志">
+        <GroupBox Grid.Row="5" Name="grpConversionLog" Header="转换日志">
             <ScrollViewer>
                 <TextBox Name="txtLog" 
                          TextWrapping="Wrap" 

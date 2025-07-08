@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- Language Options -->
+  <data name="Language_Auto" xml:space="preserve">
+    <value>Auto Detect</value>
+  </data>
+  
+  <!-- Window Title -->
+  <data name="WindowTitle" xml:space="preserve">
+    <value>MHTML to HTML Converter</value>
+  </data>
+  
+  <!-- Main Title -->
+  <data name="MainTitle" xml:space="preserve">
+    <value>MHTML to HTML Conversion Tool</value>
+  </data>
+  
+  <!-- Menu Items -->
+  <data name="Menu_File" xml:space="preserve">
+    <value>File(_F)</value>
+  </data>
+  <data name="Menu_OpenFile" xml:space="preserve">
+    <value>Open MHTML File(_O)</value>
+  </data>
+  <data name="Menu_RecentFiles" xml:space="preserve">
+    <value>Recent Files</value>
+  </data>
+  <data name="Menu_ClearRecentFiles" xml:space="preserve">
+    <value>Clear Recent Files List</value>
+  </data>
+  <data name="Menu_NoRecentFiles" xml:space="preserve">
+    <value>No recent files</value>
+  </data>
+  <data name="Menu_Exit" xml:space="preserve">
+    <value>Exit(_X)</value>
+  </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>Tools(_T)</value>
+  </data>
+  <data name="Menu_BatchConvert" xml:space="preserve">
+    <value>Batch Convert(_B)</value>
+  </data>
+  <data name="Menu_Options" xml:space="preserve">
+    <value>Options(_O)</value>
+  </data>
+  <data name="Menu_Language" xml:space="preserve">
+    <value>Language(_L)</value>
+  </data>
+  <data name="Menu_Help" xml:space="preserve">
+    <value>Help(_H)</value>
+  </data>
+  <data name="Menu_Usage" xml:space="preserve">
+    <value>Usage(_H)</value>
+  </data>
+  <data name="Menu_About" xml:space="preserve">
+    <value>About(_A)</value>
+  </data>
+  
+  <!-- Group Box Titles -->
+  <data name="GroupBox_FileSelection" xml:space="preserve">
+    <value>File Selection</value>
+  </data>
+  <data name="GroupBox_OutputOptions" xml:space="preserve">
+    <value>Output Options</value>
+  </data>
+  <data name="GroupBox_ConversionLog" xml:space="preserve">
+    <value>Conversion Log</value>
+  </data>
+  
+  <!-- Label Text -->
+  <data name="Label_SelectMHTMLFile" xml:space="preserve">
+    <value>Select MHTML File:</value>
+  </data>
+  <data name="Label_OutputFormat" xml:space="preserve">
+    <value>Output Format:</value>
+  </data>
+  <data name="Label_OutputHTMLFile" xml:space="preserve">
+    <value>Output HTML File:</value>
+  </data>
+  <data name="Label_OutputMarkdownFile" xml:space="preserve">
+    <value>Output Markdown File:</value>
+  </data>
+  
+  <!-- Radio Buttons -->
+  <data name="RadioButton_HTMLFormat" xml:space="preserve">
+    <value>HTML Format</value>
+  </data>
+  <data name="RadioButton_MarkdownFormat" xml:space="preserve">
+    <value>Markdown Format</value>
+  </data>
+  
+  <!-- Check Boxes -->
+  <data name="CheckBox_IncludeImages" xml:space="preserve">
+    <value>Include Images (embed in HTML)</value>
+  </data>
+  <data name="CheckBox_IncludeImagesMarkdown" xml:space="preserve">
+    <value>Include Images (as base64 encoded)</value>
+  </data>
+  <data name="CheckBox_EnhancedMarkdown" xml:space="preserve">
+    <value>Enhanced Markdown Processing (Recommended)</value>
+  </data>
+  <data name="CheckBox_DebugMode" xml:space="preserve">
+    <value>Debug Mode (Show detailed conversion log)</value>
+  </data>
+  
+  <!-- Buttons -->
+  <data name="Button_Browse" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="Button_StartConvert" xml:space="preserve">
+    <value>Start Convert</value>
+  </data>
+  <data name="Button_ClearLog" xml:space="preserve">
+    <value>Clear Log</value>
+  </data>
+  
+  <!-- Status Bar -->
+  <data name="Status_Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Status_Converting" xml:space="preserve">
+    <value>Converting...</value>
+  </data>
+  <data name="Status_ConvertCompleted" xml:space="preserve">
+    <value>Conversion completed successfully</value>
+  </data>
+  <data name="Status_ConvertFailed" xml:space="preserve">
+    <value>Conversion failed</value>
+  </data>
+  
+  <!-- File Size Display -->
+  <data name="FileSize_Format" xml:space="preserve">
+    <value>File Size: {0}</value>
+  </data>
+  
+  <!-- Message Box -->
+  <data name="MessageBox_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MessageBox_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="MessageBox_Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MessageBox_Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  
+  <!-- Error Messages -->
+  <data name="Error_SelectMHTMLFile" xml:space="preserve">
+    <value>Please select an MHTML file to convert.</value>
+  </data>
+  <data name="Error_InputFileNotExists" xml:space="preserve">
+    <value>The selected MHTML file does not exist.</value>
+  </data>
+  <data name="Error_SetOutputPath" xml:space="preserve">
+    <value>Please set the output file path.</value>
+  </data>
+  <data name="Error_CreateOutputDirectory" xml:space="preserve">
+    <value>Cannot create output directory: {0}</value>
+  </data>
+  <data name="Error_FileType" xml:space="preserve">
+    <value>Please drop MHTML files (.mht or .mhtml)</value>
+  </data>
+  <data name="Error_ConvertFailed" xml:space="preserve">
+    <value>Conversion failed:\n{0}</value>
+  </data>
+  <data name="Error_OpenFile" xml:space="preserve">
+    <value>Cannot open file: {0}</value>
+  </data>
+  <data name="Error_OpenBatchWindow" xml:space="preserve">
+    <value>Failed to open batch conversion window: {0}</value>
+  </data>
+  <data name="Error_OpenAboutWindow" xml:space="preserve">
+    <value>Failed to open about window: {0}</value>
+  </data>
+  
+  <!-- Conversion Process Messages -->
+  <data name="Process_StartConvert" xml:space="preserve">
+    <value>Starting conversion...</value>
+  </data>
+  <data name="Process_ReadingFile" xml:space="preserve">
+    <value>Reading MHTML file...</value>
+  </data>
+  <data name="Process_InitializingParser" xml:space="preserve">
+    <value>Initializing parser...</value>
+  </data>
+  <data name="Process_ParsingContent" xml:space="preserve">
+    <value>Parsing MHTML content...</value>
+  </data>
+  <data name="Process_ConvertingToMarkdown" xml:space="preserve">
+    <value>Converting to Markdown format...</value>
+  </data>
+  <data name="Process_GeneratingHTML" xml:space="preserve">
+    <value>Generating HTML file...</value>
+  </data>
+  <data name="Process_GeneratingMarkdown" xml:space="preserve">
+    <value>Generating Markdown file...</value>
+  </data>
+  <data name="Process_ConvertCompleted" xml:space="preserve">
+    <value>Conversion completed!</value>
+  </data>
+  
+  <!-- Log Messages -->
+  <data name="Log_ProgramStarted" xml:space="preserve">
+    <value>Program started. Please select an MHTML file to begin conversion.</value>
+  </data>
+  <data name="Log_LogCleared" xml:space="preserve">
+    <value>Log cleared.</value>
+  </data>
+  <data name="Log_SelectedInputFile" xml:space="preserve">
+    <value>Selected input file: {0}</value>
+  </data>
+  <data name="Log_SetOutputFile" xml:space="preserve">
+    <value>Set output file: {0}</value>
+  </data>
+  <data name="Log_DroppedInputFile" xml:space="preserve">
+    <value>Dropped input file: {0}</value>
+  </data>
+  <data name="Log_ConvertSuccess" xml:space="preserve">
+    <value>Conversion successful! {0} file saved to: {1}</value>
+  </data>
+  <data name="Log_ConvertFailed" xml:space="preserve">
+    <value>Conversion failed: {0}</value>
+  </data>
+  <data name="Log_ParserLog" xml:space="preserve">
+    <value>=== Parser Log ===</value>
+  </data>
+  
+  <!-- Confirmation Messages -->
+  <data name="Confirm_ExitWhileConverting" xml:space="preserve">
+    <value>Conversion is in progress. Are you sure you want to exit?</value>
+  </data>
+  <data name="Confirm_ExitProgram" xml:space="preserve">
+    <value>Confirm Exit</value>
+  </data>
+  <data name="Confirm_OpenOutputFile" xml:space="preserve">
+    <value>Conversion completed! {0} file saved to:\n{1}\n\nWould you like to open the file now?</value>
+  </data>
+  <data name="Confirm_ConvertCompleted" xml:space="preserve">
+    <value>Conversion Completed</value>
+  </data>
+  <data name="Confirm_ClearRecentFiles" xml:space="preserve">
+    <value>Are you sure you want to clear the recent files list?</value>
+  </data>
+  
+  <!-- File Dialogs -->
+  <data name="FileDialog_SelectMHTMLFile" xml:space="preserve">
+    <value>Select MHTML File</value>
+  </data>
+  <data name="FileDialog_SaveHTMLFile" xml:space="preserve">
+    <value>Save HTML File</value>
+  </data>
+  <data name="FileDialog_SaveMarkdownFile" xml:space="preserve">
+    <value>Save Markdown File</value>
+  </data>
+  <data name="FileDialog_MHTMLFiles" xml:space="preserve">
+    <value>MHTML Files (*.mht;*.mhtml)|*.mht;*.mhtml|All Files (*.*)|*.*</value>
+  </data>
+  <data name="FileDialog_HTMLFiles" xml:space="preserve">
+    <value>HTML Files (*.html)|*.html|All Files (*.*)|*.*</value>
+  </data>
+  <data name="FileDialog_MarkdownFiles" xml:space="preserve">
+    <value>Markdown Files (*.md)|*.md|All Files (*.*)|*.*</value>
+  </data>
+  
+  <!-- Encoding Related -->
+  <data name="Encoding_RegisterSuccess" xml:space="preserve">
+    <value>Encoding provider registered successfully, supporting {0}/{1} Chinese encodings</value>
+  </data>
+  <data name="Encoding_RegisterFailed" xml:space="preserve">
+    <value>Failed to register encoding provider: {0}</value>
+  </data>
+  <data name="Encoding_SupportedEncodings" xml:space="preserve">
+    <value>Encoding support registered, currently supported encodings: {0}</value>
+  </data>
+  <data name="Encoding_ReadWithEncoding" xml:space="preserve">
+    <value>Successfully read file with encoding {0}</value>
+  </data>
+  <data name="Encoding_ReadFailed" xml:space="preserve">
+    <value>Failed to read with encoding {0}: {1}</value>
+  </data>
+  <data name="Encoding_DetectedCharset" xml:space="preserve">
+    <value>Detected charset declared in file: {0}</value>
+  </data>
+  <data name="Encoding_RereadSuccess" xml:space="preserve">
+    <value>Successfully re-read with detected encoding {0}</value>
+  </data>
+  <data name="Encoding_RereadFailed" xml:space="preserve">
+    <value>Failed to re-read with detected encoding: {0}, continuing with original encoding</value>
+  </data>
+  <data name="Encoding_UnsupportedDetected" xml:space="preserve">
+    <value>Detected encoding {0} is not supported, using current encoding</value>
+  </data>
+  <data name="Encoding_AllFailed" xml:space="preserve">
+    <value>All encoding attempts failed, using UTF-8 as last resort</value>
+  </data>
+  
+  <!-- HTML to Markdown conversion logs -->
+  <data name="Log_HTMLToMarkdownStart" xml:space="preserve">
+    <value>Starting HTML to Markdown conversion, content length: {0}</value>
+  </data>
+  <data name="Log_HTMLToMarkdownPreview" xml:space="preserve">
+    <value>First 100 characters: {0}...</value>
+  </data>
+  <data name="Log_EnhancedMarkdownProcessing" xml:space="preserve">
+    <value>Using enhanced Markdown processing</value>
+  </data>
+  <data name="Log_BasicMarkdownProcessing" xml:space="preserve">
+    <value>Using basic Markdown processing</value>
+  </data>
+  <data name="Log_TryCustomConverter" xml:space="preserve">
+    <value>Trying custom HTML to Markdown converter</value>
+  </data>
+  <data name="Log_CustomConverterSuccess" xml:space="preserve">
+    <value>Custom converter succeeded</value>
+  </data>
+  <data name="Log_CustomConverterFailed" xml:space="preserve">
+    <value>Custom converter failed, trying ReverseMarkdown library</value>
+  </data>
+  <data name="Log_ConfiguringReverseMarkdown" xml:space="preserve">
+    <value>Configuring ReverseMarkdown converter</value>
+  </data>
+  <data name="Log_ReverseMarkdownCompleted" xml:space="preserve">
+    <value>ReverseMarkdown conversion completed, result length: {0}</value>
+  </data>
+  <data name="Log_HTMLToMarkdownCompleted" xml:space="preserve">
+    <value>HTML to Markdown conversion completed</value>
+  </data>
+  <data name="Log_HTMLToMarkdownError" xml:space="preserve">
+    <value>HTML to Markdown conversion failed: {0}</value>
+  </data>
+  <data name="Log_ErrorDetails" xml:space="preserve">
+    <value>Error details: {0}</value>
+  </data>
+  
+  <!-- Custom converter logs -->
+  <data name="Log_CustomConversionStart" xml:space="preserve">
+    <value>Starting custom HTML to Markdown conversion</value>
+  </data>
+  <data name="Log_HTMLCleanupCompleted" xml:space="preserve">
+    <value>HTML cleanup completed, length changed from {0} to {1}</value>
+  </data>
+  <data name="Log_StructuralElementsCompleted" xml:space="preserve">
+    <value>Structural elements conversion completed</value>
+  </data>
+  <data name="Log_FormattingElementsCompleted" xml:space="preserve">
+    <value>Formatting elements conversion completed</value>
+  </data>
+  <data name="Log_ListElementsCompleted" xml:space="preserve">
+    <value>List elements conversion completed</value>
+  </data>
+  <data name="Log_TableElementsCompleted" xml:space="preserve">
+    <value>Table elements conversion completed</value>
+  </data>
+  <data name="Log_LinksAndImagesCompleted" xml:space="preserve">
+    <value>Links and images conversion completed</value>
+  </data>
+  <data name="Log_RemainingHTMLTagsCompleted" xml:space="preserve">
+    <value>Remaining HTML tags removal completed</value>
+  </data>
+  <data name="Log_HTMLEntityDecodeCompleted" xml:space="preserve">
+    <value>HTML entity decoding completed</value>
+  </data>
+  <data name="Log_FinalCleanupCompleted" xml:space="preserve">
+    <value>Final cleanup completed, final length: {0}</value>
+  </data>
+  <data name="Log_CustomConversionError" xml:space="preserve">
+    <value>Custom HTML to Markdown conversion failed: {0}</value>
+  </data>
+  
+  <!-- Preprocessing logs -->
+  <data name="Log_HTMLPreprocessCompleted" xml:space="preserve">
+    <value>HTML preprocessing completed</value>
+  </data>
+  <data name="Log_HTMLPreprocessError" xml:space="preserve">
+    <value>HTML preprocessing failed: {0}</value>
+  </data>
+  <data name="Log_MarkdownCleanupCompleted" xml:space="preserve">
+    <value>Markdown content cleanup completed</value>
+  </data>
+  <data name="Log_MarkdownCleanupError" xml:space="preserve">
+    <value>Markdown cleanup failed: {0}</value>
+  </data>
+  <data name="Log_FallbackConversion" xml:space="preserve">
+    <value>Using fallback method for HTML to Markdown conversion</value>
+  </data>
+  <data name="Log_FallbackConversionCompleted" xml:space="preserve">
+    <value>Fallback HTML to Markdown conversion completed</value>
+  </data>
+  <data name="Log_FallbackConversionError" xml:space="preserve">
+    <value>Fallback conversion failed: {0}</value>
+  </data>
+  
+  <!-- Information Messages -->
+  <data name="Info_ConvertingInProgress" xml:space="preserve">
+    <value>Conversion is in progress, please wait.</value>
+  </data>
+  <data name="Info_OptionsInDevelopment" xml:space="preserve">
+    <value>Options feature is under development, please stay tuned!</value>
+  </data>
+  
+  <!-- Usage Instructions -->
+  <data name="Help_Usage" xml:space="preserve">
+    <value>MHTML to HTML/Markdown Converter Usage:
+
+1. Select File:
+   - Click "Browse..." button to select MHTML file
+   - Or directly drag and drop .mht/.mhtml file to the input box
+
+2. Choose Output Format:
+   - HTML Format: Preserves original HTML structure and styles
+   - Markdown Format: Converts to clean Markdown document
+
+3. Set Output:
+   - Program will automatically generate output filename based on selected format
+   - You can manually modify the output path
+
+4. Conversion Options:
+   - Check "Include Images" to embed images as base64 encoded
+   - Uncheck to keep original image references
+   - Check "Enhanced Markdown Processing" for better Markdown formatting
+   - Note: Images in Markdown format will be converted to appropriate syntax
+
+5. Start Conversion:
+   - Click "Start Convert" button
+   - View conversion progress and log information
+
+6. Shortcuts:
+   - Ctrl+O: Open file
+   - Alt+F4: Exit program</value>
+  </data>
+  
+  <!-- Recent Files Related -->
+  <data name="RecentFiles_OpenFailed" xml:space="preserve">
+    <value>Failed to open file: {0}</value>
+  </data>
+  <data name="RecentFiles_FileNotFound" xml:space="preserve">
+    <value>File not found, removed from recent files list.</value>
+  </data>
+  
+  <!-- Language Switch -->
+  <data name="Language_SwitchSuccess" xml:space="preserve">
+    <value>Language switched successfully. Some interfaces require program restart to take effect.</value>
+  </data>
+  <data name="Language_SwitchFailed" xml:space="preserve">
+    <value>Language switch failed: {0}</value>
+  </data>
+  
+  <!-- Batch Convert Window -->
+  <data name="BatchWindow_Title" xml:space="preserve">
+    <value>Batch Convert MHTML Files</value>
+  </data>
+  <data name="BatchWindow_MainTitle" xml:space="preserve">
+    <value>Batch Convert MHTML Files</value>
+  </data>
+  <data name="BatchWindow_FileSelection" xml:space="preserve">
+    <value>File Selection</value>
+  </data>
+  <data name="BatchWindow_OutputSettings" xml:space="preserve">
+    <value>Output Settings</value>
+  </data>
+  <data name="BatchWindow_ProgressAndLog" xml:space="preserve">
+    <value>Conversion Progress and Log</value>
+  </data>
+  <data name="BatchWindow_AddFiles" xml:space="preserve">
+    <value>Add Files...</value>
+  </data>
+  <data name="BatchWindow_AddFolder" xml:space="preserve">
+    <value>Add Folder...</value>
+  </data>
+  <data name="BatchWindow_ClearFiles" xml:space="preserve">
+    <value>Clear List</value>
+  </data>
+  <data name="BatchWindow_OutputDirectory" xml:space="preserve">
+    <value>Output Directory:</value>
+  </data>
+  <data name="BatchWindow_OutputFormat" xml:space="preserve">
+    <value>Output Format:</value>
+  </data>
+  <data name="BatchWindow_ConvertOptions" xml:space="preserve">
+    <value>Convert Options:</value>
+  </data>
+  <data name="BatchWindow_StartConvert" xml:space="preserve">
+    <value>Start Batch Convert</value>
+  </data>
+  <data name="BatchWindow_StopConvert" xml:space="preserve">
+    <value>Stop Convert</value>
+  </data>
+  <data name="BatchWindow_SelectedFiles" xml:space="preserve">
+    <value>{0} files selected</value>
+  </data>
+  <data name="BatchWindow_Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="BatchWindow_CurrentFile" xml:space="preserve">
+    <value>Current File: {0}</value>
+  </data>
+  <data name="BatchWindow_CurrentFileNone" xml:space="preserve">
+    <value>Current File: None</value>
+  </data>
+  <data name="BatchWindow_ColumnFileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="BatchWindow_ColumnFileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="BatchWindow_ColumnStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="BatchWindow_ColumnFullPath" xml:space="preserve">
+    <value>Full Path</value>
+  </data>
+  
+  <!-- Batch conversion logs -->
+  <data name="BatchLog_StoppingConversion" xml:space="preserve">
+    <value>Stopping conversion...</value>
+  </data>
+  <data name="BatchLog_AddFileFailed" xml:space="preserve">
+    <value>Failed to add file [{0}]: {1}</value>
+  </data>
+  <data name="BatchLog_FilesAdded" xml:space="preserve">
+    <value>Added {0} files to conversion list</value>
+  </data>
+  <data name="BatchLog_StartBatchConversion" xml:space="preserve">
+    <value>Starting batch conversion of {0} files...</value>
+  </data>
+  <data name="BatchLog_ProgressUpdate" xml:space="preserve">
+    <value>[{0}/{1}] {2}</value>
+  </data>
+  <data name="BatchLog_ConversionStats" xml:space="preserve">
+    <value>Conversion statistics - Total: {0}, Successful: {1}, Failed: {2}</value>
+  </data>
+  <data name="BatchLog_ConversionCancelled" xml:space="preserve">
+    <value>Batch conversion cancelled</value>
+  </data>
+  <data name="BatchLog_ConversionError" xml:space="preserve">
+    <value>Batch conversion error: {0}</value>
+  </data>
+  <data name="BatchLog_MarkdownConversionFailed" xml:space="preserve">
+    <value>Markdown conversion failed: {0}</value>
+  </data>
+  
+  <!-- About Window -->
+  <data name="AboutWindow_Title" xml:space="preserve">
+    <value>About MHTML Converter</value>
+  </data>
+  <data name="AboutWindow_AppName" xml:space="preserve">
+    <value>MHTML Converter</value>
+  </data>
+  <data name="AboutWindow_Version" xml:space="preserve">
+    <value>Version 1.0.0</value>
+  </data>
+  <data name="AboutWindow_TechInfo" xml:space="preserve">
+    <value>Development Language: C# / WPF | Framework Version: .NET 8.0</value>
+  </data>
+  <data name="AboutWindow_Features" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="AboutWindow_TechDetails" xml:space="preserve">
+    <value>Technical Information</value>
+  </data>
+  <data name="AboutWindow_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="AboutWindow_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="AboutWindow_Feature1" xml:space="preserve">
+    <value>• Support for both HTML and Markdown output formats</value>
+  </data>
+  <data name="AboutWindow_Feature2" xml:space="preserve">
+    <value>• Batch conversion functionality for multiple files</value>
+  </data>
+  <data name="AboutWindow_Feature3" xml:space="preserve">
+    <value>• Enhanced Markdown format processing</value>
+  </data>
+  <data name="AboutWindow_Feature4" xml:space="preserve">
+    <value>• Smart table conversion (supports thead/tbody structure)</value>
+  </data>
+  <data name="AboutWindow_Feature5" xml:space="preserve">
+    <value>• Optimized table formatting</value>
+  </data>
+  <data name="AboutWindow_Feature6" xml:space="preserve">
+    <value>• Drag and drop support</value>
+  </data>
+  <data name="AboutWindow_Feature7" xml:space="preserve">
+    <value>• Real-time conversion progress display</value>
+  </data>
+  <data name="AboutWindow_Feature8" xml:space="preserve">
+    <value>• Detailed logging and debug mode</value>
+  </data>
+  <data name="AboutWindow_Feature9" xml:space="preserve">
+    <value>• Image base64 encoding support</value>
+  </data>
+  <data name="AboutWindow_Feature10" xml:space="preserve">
+    <value>• Smart encoding detection (GB2312, GBK, Big5, etc.)</value>
+  </data>
+  <data name="AboutWindow_Feature11" xml:space="preserve">
+    <value>• Smart HTML preprocessing and postprocessing</value>
+  </data>
+  <data name="AboutWindow_Feature12" xml:space="preserve">
+    <value>• Multi-language interface support (Chinese/English)</value>
+  </data>
+  <data name="AboutWindow_Feature13" xml:space="preserve">
+    <value>• Recent files tracking</value>
+  </data>
+  <data name="AboutWindow_TechDetail1" xml:space="preserve">
+    <value>• Based on Windows Presentation Foundation (WPF)</value>
+  </data>
+  <data name="AboutWindow_TechDetail2" xml:space="preserve">
+    <value>• Uses ReverseMarkdown library for HTML to Markdown conversion</value>
+  </data>
+  <data name="AboutWindow_TechDetail3" xml:space="preserve">
+    <value>• Supports multiple Chinese encoding formats</value>
+  </data>
+  <data name="AboutWindow_TechDetail4" xml:space="preserve">
+    <value>• Asynchronous processing ensures UI responsiveness</value>
+  </data>
+  <data name="AboutWindow_CopyrightText" xml:space="preserve">
+    <value>© 2024 MHTML Converter. All rights reserved.</value>
+  </data>
+  
+  <!-- Dialog Related -->
+  <data name="Dialog_SelectFolderWithMHTML" xml:space="preserve">
+    <value>Select folder containing MHTML files</value>
+  </data>
+  <data name="Dialog_SelectOutputDirectory" xml:space="preserve">
+    <value>Select output directory</value>
+  </data>
+  
+  <!-- Error Messages Related -->
+  <data name="Error_ScanFolder" xml:space="preserve">
+    <value>Failed to scan folder: {0}</value>
+  </data>
+  <data name="Error_ConvertingCannotClear" xml:space="preserve">
+    <value>Conversion is in progress, cannot clear file list.</value>
+  </data>
+</root> 

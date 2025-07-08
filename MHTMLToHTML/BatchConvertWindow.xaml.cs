@@ -1,25 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Microsoft.Win32;
-using WinForms = System.Windows.Forms;
-using MessageBox = System.Windows.MessageBox;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
+using MessageBox = System.Windows.MessageBox;
+using WinForms = System.Windows.Forms;
 
 namespace MHTMLToHTML
 {
@@ -35,12 +24,134 @@ namespace MHTMLToHTML
         private int completedFiles = 0;
         private int successCount = 0;
         private int errorCount = 0;
+        private LanguageManager languageManager;
 
         public BatchConvertWindow()
         {
             InitializeComponent();
+            InitializeLanguage();
             InitializeData();
             InitializeBatchWorker();
+        }
+
+        /// <summary>
+        /// 初始化语言系统
+        /// </summary>
+        private void InitializeLanguage()
+        {
+            try
+            {
+                languageManager = LanguageManager.Instance;
+                languageManager.LanguageChanged += LanguageManager_LanguageChanged;
+                UpdateUITexts();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"初始化语言系统失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 语言变更事件处理器
+        /// </summary>
+        private void LanguageManager_LanguageChanged(object sender, LanguageChangedEventArgs e)
+        {
+            try
+            {
+                UpdateUITexts();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"处理语言变更事件失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 更新所有UI文本
+        /// </summary>
+        private void UpdateUITexts()
+        {
+            try
+            {
+                // 更新窗口标题
+                this.Title = languageManager.GetString("BatchWindow_Title");
+                
+                // 更新主标题
+                txtBatchTitle.Text = languageManager.GetString("BatchWindow_MainTitle");
+                
+                // 更新分组框标题
+                grpFileSelection.Header = languageManager.GetString("BatchWindow_FileSelection");
+                grpOutputSettings.Header = languageManager.GetString("BatchWindow_OutputSettings");
+                grpProgressAndLog.Header = languageManager.GetString("BatchWindow_ProgressAndLog");
+                
+                // 更新按钮文本
+                btnAddFiles.Content = languageManager.GetString("BatchWindow_AddFiles");
+                btnAddFolder.Content = languageManager.GetString("BatchWindow_AddFolder");
+                btnClearFiles.Content = languageManager.GetString("BatchWindow_ClearFiles");
+                btnBrowseOutputDir.Content = languageManager.GetString("Button_Browse");
+                btnStartBatch.Content = languageManager.GetString("BatchWindow_StartConvert");
+                btnStopBatch.Content = languageManager.GetString("BatchWindow_StopConvert");
+                
+                // 更新标签文本
+                txtOutputDirectoryLabel.Text = languageManager.GetString("BatchWindow_OutputDirectory");
+                txtOutputFormatLabel.Text = languageManager.GetString("BatchWindow_OutputFormat");
+                txtConvertOptionsLabel.Text = languageManager.GetString("BatchWindow_ConvertOptions");
+                
+                // 更新列表视图列标题
+                if (lstFiles.View is GridView gridView)
+                {
+                    if (gridView.Columns.Count >= 4)
+                    {
+                        gridView.Columns[0].Header = languageManager.GetString("BatchWindow_ColumnFileName");
+                        gridView.Columns[1].Header = languageManager.GetString("BatchWindow_ColumnFileSize");
+                        gridView.Columns[2].Header = languageManager.GetString("BatchWindow_ColumnStatus");
+                        gridView.Columns[3].Header = languageManager.GetString("BatchWindow_ColumnFullPath");
+                    }
+                }
+                
+                // 更新复选框文本
+                UpdateCheckBoxTexts();
+                
+                // 更新状态文本
+                if (string.IsNullOrEmpty(txtOverallProgress.Text) || 
+                    txtOverallProgress.Text == "准备就绪" || 
+                    txtOverallProgress.Text == "Ready")
+                {
+                    txtOverallProgress.Text = languageManager.GetString("BatchWindow_Ready");
+                }
+                
+                if (string.IsNullOrEmpty(txtCurrentFile.Text) || 
+                    txtCurrentFile.Text == "当前文件：无" || 
+                    txtCurrentFile.Text == "Current File: None")
+                {
+                    txtCurrentFile.Text = languageManager.GetString("BatchWindow_CurrentFileNone");
+                }
+                
+                // 更新文件计数
+                UpdateFileCount();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"更新UI文本失败: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 更新复选框文本
+        /// </summary>
+        private void UpdateCheckBoxTexts()
+        {
+            if (rbBatchMarkdown.IsChecked == true)
+            {
+                chkBatchIncludeImages.Content = languageManager.GetString("CheckBox_IncludeImagesMarkdown");
+            }
+            else
+            {
+                chkBatchIncludeImages.Content = languageManager.GetString("CheckBox_IncludeImages");
+            }
+            
+            chkBatchEnhancedMarkdown.Content = languageManager.GetString("CheckBox_EnhancedMarkdown");
+            chkBatchDebugMode.Content = languageManager.GetString("CheckBox_DebugMode");
         }
 
         /// <summary>
@@ -75,8 +186,8 @@ namespace MHTMLToHTML
         {
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
-                Title = "选择MHTML文件",
-                Filter = "MHTML文件 (*.mht;*.mhtml)|*.mht;*.mhtml|所有文件 (*.*)|*.*",
+                Title = languageManager?.GetString("FileDialog_SelectMHTMLFile") ?? "选择MHTML文件",
+                Filter = languageManager?.GetString("FileDialog_MHTMLFiles") ?? "MHTML文件 (*.mht;*.mhtml)|*.mht;*.mhtml|所有文件 (*.*)|*.*",
                 Multiselect = true
             };
 
@@ -92,7 +203,7 @@ namespace MHTMLToHTML
         private void BtnAddFolder_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new WinForms.FolderBrowserDialog();
-            dialog.Description = "选择包含MHTML文件的文件夹";
+            dialog.Description = languageManager?.GetString("Dialog_SelectFolderWithMHTML") ?? "选择包含MHTML文件的文件夹";
             dialog.ShowNewFolderButton = false;
 
             if (dialog.ShowDialog() == WinForms.DialogResult.OK)
@@ -104,8 +215,12 @@ namespace MHTMLToHTML
                 }
                 catch (Exception ex)
                 {
-                    LogMessage($"扫描文件夹失败: {ex.Message}");
-                    MessageBox.Show($"扫描文件夹失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    string message = languageManager?.GetString("Error_ScanFolder", ex.Message) ?? $"扫描文件夹失败: {ex.Message}";
+                    LogMessage(message);
+                    MessageBox.Show(message, 
+                        languageManager?.GetString("MessageBox_Error") ?? "错误", 
+                        MessageBoxButton.OK, 
+                        MessageBoxImage.Error);
                 }
             }
         }
@@ -117,12 +232,19 @@ namespace MHTMLToHTML
         {
             if (isConverting)
             {
-                MessageBox.Show("转换正在进行中，无法清空文件列表。", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+                    languageManager?.GetString("Error_ConvertingCannotClear") ?? "转换正在进行中，无法清空文件列表。", 
+                    languageManager?.GetString("MessageBox_Information") ?? "提示", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Information);
                 return;
             }
 
-            fileItems.Clear();
-            UpdateFileCount();
+            if (fileItems != null)
+            {
+                fileItems.Clear();
+                UpdateFileCount();
+            }
         }
 
         /// <summary>
@@ -131,7 +253,7 @@ namespace MHTMLToHTML
         private void BtnBrowseOutputDir_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new WinForms.FolderBrowserDialog();
-            dialog.Description = "选择输出目录";
+            dialog.Description = languageManager?.GetString("Dialog_SelectOutputDirectory") ?? "选择输出目录";
             dialog.ShowNewFolderButton = true;
             dialog.SelectedPath = txtOutputDir.Text;
 
@@ -150,16 +272,17 @@ namespace MHTMLToHTML
 
             if (rbBatchMarkdown.IsChecked == true)
             {
-                chkBatchIncludeImages.Content = "包含图片（作为base64编码）";
                 chkBatchEnhancedMarkdown.Visibility = Visibility.Visible;
                 chkBatchDebugMode.Visibility = Visibility.Visible;
             }
             else
             {
-                chkBatchIncludeImages.Content = "包含图片（嵌入HTML中）";
                 chkBatchEnhancedMarkdown.Visibility = Visibility.Collapsed;
                 chkBatchDebugMode.Visibility = Visibility.Collapsed;
             }
+            
+            // 更新复选框文本
+            UpdateCheckBoxTexts();
         }
 
         /// <summary>
@@ -219,7 +342,7 @@ namespace MHTMLToHTML
             if (batchWorker.IsBusy)
             {
                 batchWorker.CancelAsync();
-                LogMessage("正在停止转换...");
+                LogMessage(languageManager.GetString("BatchLog_StoppingConversion"));
             }
         }
 
@@ -262,6 +385,12 @@ namespace MHTMLToHTML
         /// <param name="filePaths">文件路径数组</param>
         private void AddFiles(string[] filePaths)
         {
+            if (fileItems == null)
+            {
+                LogMessage("文件列表未初始化");
+                return;
+            }
+            
             int addedCount = 0;
             foreach (string filePath in filePaths)
             {
@@ -288,14 +417,14 @@ namespace MHTMLToHTML
                 }
                 catch (Exception ex)
                 {
-                    LogMessage($"添加文件失败 [{filePath}]: {ex.Message}");
+                    LogMessage(languageManager.GetString("BatchLog_AddFileFailed", filePath, ex.Message));
                 }
             }
 
             if (addedCount > 0)
             {
                 UpdateFileCount();
-                LogMessage($"已添加 {addedCount} 个文件到转换列表");
+                LogMessage(languageManager.GetString("BatchLog_FilesAdded", addedCount));
             }
         }
 
@@ -304,7 +433,14 @@ namespace MHTMLToHTML
         /// </summary>
         private void UpdateFileCount()
         {
-            txtFileCount.Text = $"已选择 {fileItems.Count} 个文件";
+            if (fileItems != null)
+            {
+                txtFileCount.Text = languageManager?.GetString("BatchWindow_SelectedFiles", fileItems.Count.ToString()) ?? $"已选择 {fileItems.Count} 个文件";
+            }
+            else
+            {
+                txtFileCount.Text = languageManager?.GetString("BatchWindow_SelectedFiles", "0") ?? "已选择 0 个文件";
+            }
         }
 
         /// <summary>
@@ -313,7 +449,7 @@ namespace MHTMLToHTML
         /// <returns>验证是否通过</returns>
         private bool ValidateBatchInputs()
         {
-            if (fileItems.Count == 0)
+            if (fileItems == null || fileItems.Count == 0)
             {
                 MessageBox.Show("请添加要转换的MHTML文件。", "输入错误", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return false;
@@ -346,6 +482,12 @@ namespace MHTMLToHTML
         /// </summary>
         private void StartBatchConversion()
         {
+            if (fileItems == null)
+            {
+                LogMessage("文件列表未初始化");
+                return;
+            }
+            
             isConverting = true;
             totalFiles = fileItems.Count;
             completedFiles = 0;
@@ -372,7 +514,7 @@ namespace MHTMLToHTML
                 DebugMode = chkBatchDebugMode.IsChecked ?? false
             };
 
-            LogMessage($"开始批量转换 {totalFiles} 个文件...");
+            LogMessage(languageManager.GetString("BatchLog_StartBatchConversion", totalFiles));
             batchWorker.RunWorkerAsync(parameters);
         }
 
@@ -394,7 +536,7 @@ namespace MHTMLToHTML
                 progressCurrent.Value = 0;
                 txtOverallProgress.Text = "准备就绪";
                 txtCurrentFile.Text = "当前文件：无";
-                txtBatchStatus.Text = "就绪";
+                txtOverallProgress.Text = "就绪";
             }
         }
 
@@ -606,7 +748,7 @@ namespace MHTMLToHTML
                     progressCurrent.Value = 100;
                     progressOverall.Value = info.OverallProgress;
                     txtOverallProgress.Text = $"总进度：{completedFiles}/{totalFiles} ({info.OverallProgress}%)";
-                    LogMessage($"[{completedFiles}/{totalFiles}] {info.Message}");
+                    LogMessage(languageManager.GetString("BatchLog_ProgressUpdate", completedFiles, totalFiles, info.Message));
                     
                     // 更新文件状态
                     var completeItem = fileItems.FirstOrDefault(f => f.FileName == info.CurrentFile);
@@ -616,14 +758,14 @@ namespace MHTMLToHTML
                     }
                     
                     // 更新统计
-                    txtBatchStats.Text = $"成功: {successCount}, 失败: {errorCount}";
+                    txtFileCount.Text = $"成功: {successCount}, 失败: {errorCount}";
                     break;
 
                 case BatchProgressType.AllComplete:
                     progressOverall.Value = 100;
                     txtOverallProgress.Text = "批量转换完成";
                     LogMessage(info.Message);
-                    LogMessage($"转换统计 - 总计: {totalFiles}, 成功: {successCount}, 失败: {errorCount}");
+                    LogMessage(languageManager.GetString("BatchLog_ConversionStats", totalFiles, successCount, errorCount));
                     break;
             }
         }
@@ -639,19 +781,19 @@ namespace MHTMLToHTML
             if (e.Cancelled)
             {
                 txtOverallProgress.Text = "转换已取消";
-                txtBatchStatus.Text = "已取消";
-                LogMessage("批量转换已取消");
+                txtOverallProgress.Text = "已取消";
+                LogMessage(languageManager.GetString("BatchLog_ConversionCancelled"));
             }
             else if (e.Error != null)
             {
                 txtOverallProgress.Text = "转换出错";
-                txtBatchStatus.Text = "错误";
-                LogMessage($"批量转换出错: {e.Error.Message}");
+                txtOverallProgress.Text = "错误";
+                LogMessage(languageManager.GetString("BatchLog_ConversionError", e.Error.Message));
                 MessageBox.Show($"批量转换出错: {e.Error.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                txtBatchStatus.Text = "完成";
+                txtOverallProgress.Text = "完成";
                 string resultMessage = $"批量转换完成！\n\n总文件数：{totalFiles}\n成功：{successCount}\n失败：{errorCount}";
                 
                 if (errorCount == 0)
@@ -766,7 +908,7 @@ namespace MHTMLToHTML
             }
             catch (Exception ex)
             {
-                LogMessage($"Markdown转换失败: {ex.Message}");
+                LogMessage(languageManager.GetString("BatchLog_MarkdownConversionFailed", ex.Message));
                 return ExtractTextFromHtml(htmlContent);
             }
         }
@@ -781,7 +923,7 @@ namespace MHTMLToHTML
 
             try
             {
-                if (debugMode) LogMessage("开始自定义HTML到Markdown转换");
+                if (debugMode) LogMessage(languageManager.GetString("Log_CustomConversionStart"));
                 
                 // 1. 清理HTML
                 html = CleanHtmlForMarkdown(html);
@@ -814,7 +956,7 @@ namespace MHTMLToHTML
             }
             catch (Exception ex)
             {
-                LogMessage($"自定义HTML到Markdown转换失败: {ex.Message}");
+                LogMessage(languageManager.GetString("Log_CustomConversionError", ex.Message));
                 return string.Empty;
             }
         }

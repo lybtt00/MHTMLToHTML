@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- 语言选项 -->
+  <data name="Language_Auto" xml:space="preserve">
+    <value>自动检测</value>
+  </data>
+  
+  <!-- 窗口标题 -->
+  <data name="WindowTitle" xml:space="preserve">
+    <value>MHTML转HTML工具</value>
+  </data>
+  
+  <!-- 主标题 -->
+  <data name="MainTitle" xml:space="preserve">
+    <value>MHTML到HTML转换工具</value>
+  </data>
+  
+  <!-- 菜单项 -->
+  <data name="Menu_File" xml:space="preserve">
+    <value>文件(_F)</value>
+  </data>
+  <data name="Menu_OpenFile" xml:space="preserve">
+    <value>打开MHTML文件(_O)</value>
+  </data>
+  <data name="Menu_RecentFiles" xml:space="preserve">
+    <value>最近打开</value>
+  </data>
+  <data name="Menu_ClearRecentFiles" xml:space="preserve">
+    <value>清空最近打开列表</value>
+  </data>
+  <data name="Menu_NoRecentFiles" xml:space="preserve">
+    <value>没有最近打开的文件</value>
+  </data>
+  <data name="Menu_Exit" xml:space="preserve">
+    <value>退出(_X)</value>
+  </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>工具(_T)</value>
+  </data>
+  <data name="Menu_BatchConvert" xml:space="preserve">
+    <value>批量转换(_B)</value>
+  </data>
+  <data name="Menu_Options" xml:space="preserve">
+    <value>选项(_O)</value>
+  </data>
+  <data name="Menu_Language" xml:space="preserve">
+    <value>语言(_L)</value>
+  </data>
+  <data name="Menu_Help" xml:space="preserve">
+    <value>帮助(_H)</value>
+  </data>
+  <data name="Menu_Usage" xml:space="preserve">
+    <value>使用说明(_H)</value>
+  </data>
+  <data name="Menu_About" xml:space="preserve">
+    <value>关于(_A)</value>
+  </data>
+  
+  <!-- 分组框标题 -->
+  <data name="GroupBox_FileSelection" xml:space="preserve">
+    <value>文件选择</value>
+  </data>
+  <data name="GroupBox_OutputOptions" xml:space="preserve">
+    <value>输出选项</value>
+  </data>
+  <data name="GroupBox_ConversionLog" xml:space="preserve">
+    <value>转换日志</value>
+  </data>
+  
+  <!-- 标签文本 -->
+  <data name="Label_SelectMHTMLFile" xml:space="preserve">
+    <value>选择MHTML文件:</value>
+  </data>
+  <data name="Label_OutputFormat" xml:space="preserve">
+    <value>输出格式:</value>
+  </data>
+  <data name="Label_OutputHTMLFile" xml:space="preserve">
+    <value>输出HTML文件:</value>
+  </data>
+  <data name="Label_OutputMarkdownFile" xml:space="preserve">
+    <value>输出Markdown文件:</value>
+  </data>
+  
+  <!-- 单选按钮 -->
+  <data name="RadioButton_HTMLFormat" xml:space="preserve">
+    <value>HTML格式</value>
+  </data>
+  <data name="RadioButton_MarkdownFormat" xml:space="preserve">
+    <value>Markdown格式</value>
+  </data>
+  
+  <!-- 复选框 -->
+  <data name="CheckBox_IncludeImages" xml:space="preserve">
+    <value>包含图片（嵌入HTML中）</value>
+  </data>
+  <data name="CheckBox_IncludeImagesMarkdown" xml:space="preserve">
+    <value>包含图片（作为base64编码）</value>
+  </data>
+  <data name="CheckBox_EnhancedMarkdown" xml:space="preserve">
+    <value>增强Markdown格式处理（推荐）</value>
+  </data>
+  <data name="CheckBox_DebugMode" xml:space="preserve">
+    <value>调试模式（显示详细转换日志）</value>
+  </data>
+  
+  <!-- 按钮 -->
+  <data name="Button_Browse" xml:space="preserve">
+    <value>浏览...</value>
+  </data>
+  <data name="Button_StartConvert" xml:space="preserve">
+    <value>开始转换</value>
+  </data>
+  <data name="Button_ClearLog" xml:space="preserve">
+    <value>清空日志</value>
+  </data>
+  
+  <!-- 状态栏 -->
+  <data name="Status_Ready" xml:space="preserve">
+    <value>就绪</value>
+  </data>
+  <data name="Status_Converting" xml:space="preserve">
+    <value>正在转换...</value>
+  </data>
+  <data name="Status_ConvertCompleted" xml:space="preserve">
+    <value>转换成功完成</value>
+  </data>
+  <data name="Status_ConvertFailed" xml:space="preserve">
+    <value>转换失败</value>
+  </data>
+  
+  <!-- 文件大小显示 -->
+  <data name="FileSize_Format" xml:space="preserve">
+    <value>文件大小: {0}</value>
+  </data>
+  
+  <!-- 消息框 -->
+  <data name="MessageBox_Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="MessageBox_Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="MessageBox_Information" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="MessageBox_Question" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  
+  <!-- 错误消息 -->
+  <data name="Error_SelectMHTMLFile" xml:space="preserve">
+    <value>请选择要转换的MHTML文件。</value>
+  </data>
+  <data name="Error_InputFileNotExists" xml:space="preserve">
+    <value>选择的MHTML文件不存在。</value>
+  </data>
+  <data name="Error_SetOutputPath" xml:space="preserve">
+    <value>请设置输出文件路径。</value>
+  </data>
+  <data name="Error_CreateOutputDirectory" xml:space="preserve">
+    <value>无法创建输出目录: {0}</value>
+  </data>
+  <data name="Error_FileType" xml:space="preserve">
+    <value>请拖放MHTML文件（.mht或.mhtml）</value>
+  </data>
+  <data name="Error_ConvertFailed" xml:space="preserve">
+    <value>转换失败:\n{0}</value>
+  </data>
+  <data name="Error_OpenFile" xml:space="preserve">
+    <value>无法打开文件: {0}</value>
+  </data>
+  <data name="Error_OpenBatchWindow" xml:space="preserve">
+    <value>打开批量转换窗口失败: {0}</value>
+  </data>
+  <data name="Error_OpenAboutWindow" xml:space="preserve">
+    <value>打开关于窗口失败: {0}</value>
+  </data>
+  
+  <!-- 转换过程消息 -->
+  <data name="Process_StartConvert" xml:space="preserve">
+    <value>开始转换...</value>
+  </data>
+  <data name="Process_ReadingFile" xml:space="preserve">
+    <value>正在读取MHTML文件...</value>
+  </data>
+  <data name="Process_InitializingParser" xml:space="preserve">
+    <value>正在初始化解析器...</value>
+  </data>
+  <data name="Process_ParsingContent" xml:space="preserve">
+    <value>正在解析MHTML内容...</value>
+  </data>
+  <data name="Process_ConvertingToMarkdown" xml:space="preserve">
+    <value>正在转换为Markdown格式...</value>
+  </data>
+  <data name="Process_GeneratingHTML" xml:space="preserve">
+    <value>正在生成HTML文件...</value>
+  </data>
+  <data name="Process_GeneratingMarkdown" xml:space="preserve">
+    <value>正在生成Markdown文件...</value>
+  </data>
+  <data name="Process_ConvertCompleted" xml:space="preserve">
+    <value>转换完成！</value>
+  </data>
+  
+  <!-- 日志消息 -->
+  <data name="Log_ProgramStarted" xml:space="preserve">
+    <value>程序已启动，请选择MHTML文件开始转换。</value>
+  </data>
+  <data name="Log_LogCleared" xml:space="preserve">
+    <value>日志已清空。</value>
+  </data>
+  <data name="Log_SelectedInputFile" xml:space="preserve">
+    <value>已选择输入文件: {0}</value>
+  </data>
+  <data name="Log_SetOutputFile" xml:space="preserve">
+    <value>已设置输出文件: {0}</value>
+  </data>
+  <data name="Log_DroppedInputFile" xml:space="preserve">
+    <value>已拖放输入文件: {0}</value>
+  </data>
+  <data name="Log_ConvertSuccess" xml:space="preserve">
+    <value>转换成功！{0}文件已保存到: {1}</value>
+  </data>
+  <data name="Log_ConvertFailed" xml:space="preserve">
+    <value>转换失败: {0}</value>
+  </data>
+  <data name="Log_ParserLog" xml:space="preserve">
+    <value>=== 解析器日志 ===</value>
+  </data>
+  
+  <!-- 确认消息 -->
+  <data name="Confirm_ExitWhileConverting" xml:space="preserve">
+    <value>转换正在进行中，确定要退出吗？</value>
+  </data>
+  <data name="Confirm_ExitProgram" xml:space="preserve">
+    <value>确认退出</value>
+  </data>
+  <data name="Confirm_OpenOutputFile" xml:space="preserve">
+    <value>转换完成！{0}文件已保存到:\n{1}\n\n是否现在打开该文件？</value>
+  </data>
+  <data name="Confirm_ConvertCompleted" xml:space="preserve">
+    <value>转换完成</value>
+  </data>
+  <data name="Confirm_ClearRecentFiles" xml:space="preserve">
+    <value>确定要清空最近打开的文件列表吗？</value>
+  </data>
+  
+  <!-- 文件对话框 -->
+  <data name="FileDialog_SelectMHTMLFile" xml:space="preserve">
+    <value>选择MHTML文件</value>
+  </data>
+  <data name="FileDialog_SaveHTMLFile" xml:space="preserve">
+    <value>保存HTML文件</value>
+  </data>
+  <data name="FileDialog_SaveMarkdownFile" xml:space="preserve">
+    <value>保存Markdown文件</value>
+  </data>
+  <data name="FileDialog_MHTMLFiles" xml:space="preserve">
+    <value>MHTML文件 (*.mht;*.mhtml)|*.mht;*.mhtml|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="FileDialog_HTMLFiles" xml:space="preserve">
+    <value>HTML文件 (*.html)|*.html|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="FileDialog_MarkdownFiles" xml:space="preserve">
+    <value>Markdown文件 (*.md)|*.md|所有文件 (*.*)|*.*</value>
+  </data>
+  
+  <!-- 编码相关 -->
+  <data name="Encoding_RegisterSuccess" xml:space="preserve">
+    <value>编码提供程序注册成功，支持 {0}/{1} 个中文编码</value>
+  </data>
+  <data name="Encoding_RegisterFailed" xml:space="preserve">
+    <value>注册编码提供程序失败: {0}</value>
+  </data>
+  <data name="Encoding_SupportedEncodings" xml:space="preserve">
+    <value>已注册编码支持，当前支持的编码: {0}</value>
+  </data>
+  <data name="Encoding_ReadWithEncoding" xml:space="preserve">
+    <value>使用编码 {0} 成功读取文件</value>
+  </data>
+  <data name="Encoding_ReadFailed" xml:space="preserve">
+    <value>使用编码 {0} 读取失败: {1}</value>
+  </data>
+  <data name="Encoding_DetectedCharset" xml:space="preserve">
+    <value>检测到文件内部声明的字符集: {0}</value>
+  </data>
+  <data name="Encoding_RereadSuccess" xml:space="preserve">
+    <value>使用检测到的编码 {0} 重新读取成功</value>
+  </data>
+  <data name="Encoding_RereadFailed" xml:space="preserve">
+    <value>使用检测到的编码重新读取失败: {0}，继续使用原编码</value>
+  </data>
+  <data name="Encoding_UnsupportedDetected" xml:space="preserve">
+    <value>检测到的编码 {0} 不受支持，使用当前编码</value>
+  </data>
+  <data name="Encoding_AllFailed" xml:space="preserve">
+    <value>所有编码尝试失败，使用UTF-8进行最后尝试</value>
+  </data>
+  
+  <!-- HTML到Markdown转换日志 -->
+  <data name="Log_HTMLToMarkdownStart" xml:space="preserve">
+    <value>开始HTML到Markdown转换，内容长度: {0}</value>
+  </data>
+  <data name="Log_HTMLToMarkdownPreview" xml:space="preserve">
+    <value>前100个字符: {0}...</value>
+  </data>
+  <data name="Log_EnhancedMarkdownProcessing" xml:space="preserve">
+    <value>使用增强Markdown处理</value>
+  </data>
+  <data name="Log_BasicMarkdownProcessing" xml:space="preserve">
+    <value>使用基础Markdown处理</value>
+  </data>
+  <data name="Log_TryCustomConverter" xml:space="preserve">
+    <value>尝试使用自定义HTML到Markdown转换器</value>
+  </data>
+  <data name="Log_CustomConverterSuccess" xml:space="preserve">
+    <value>自定义转换器成功</value>
+  </data>
+  <data name="Log_CustomConverterFailed" xml:space="preserve">
+    <value>自定义转换器失败，尝试ReverseMarkdown库</value>
+  </data>
+  <data name="Log_ConfiguringReverseMarkdown" xml:space="preserve">
+    <value>配置ReverseMarkdown转换器</value>
+  </data>
+  <data name="Log_ReverseMarkdownCompleted" xml:space="preserve">
+    <value>ReverseMarkdown转换完成，结果长度: {0}</value>
+  </data>
+  <data name="Log_HTMLToMarkdownCompleted" xml:space="preserve">
+    <value>HTML到Markdown转换完成</value>
+  </data>
+  <data name="Log_HTMLToMarkdownError" xml:space="preserve">
+    <value>HTML到Markdown转换失败: {0}</value>
+  </data>
+  <data name="Log_ErrorDetails" xml:space="preserve">
+    <value>错误详情: {0}</value>
+  </data>
+  
+  <!-- 自定义转换器日志 -->
+  <data name="Log_CustomConversionStart" xml:space="preserve">
+    <value>开始自定义HTML到Markdown转换</value>
+  </data>
+  <data name="Log_HTMLCleanupCompleted" xml:space="preserve">
+    <value>HTML清理完成，长度从 {0} 变为 {1}</value>
+  </data>
+  <data name="Log_StructuralElementsCompleted" xml:space="preserve">
+    <value>结构元素转换完成</value>
+  </data>
+  <data name="Log_FormattingElementsCompleted" xml:space="preserve">
+    <value>格式元素转换完成</value>
+  </data>
+  <data name="Log_ListElementsCompleted" xml:space="preserve">
+    <value>列表转换完成</value>
+  </data>
+  <data name="Log_TableElementsCompleted" xml:space="preserve">
+    <value>表格转换完成</value>
+  </data>
+  <data name="Log_LinksAndImagesCompleted" xml:space="preserve">
+    <value>链接和图片转换完成</value>
+  </data>
+  <data name="Log_RemainingHTMLTagsCompleted" xml:space="preserve">
+    <value>剩余HTML标签移除完成</value>
+  </data>
+  <data name="Log_HTMLEntityDecodeCompleted" xml:space="preserve">
+    <value>HTML实体解码完成</value>
+  </data>
+  <data name="Log_FinalCleanupCompleted" xml:space="preserve">
+    <value>最终清理完成，最终长度: {0}</value>
+  </data>
+  <data name="Log_CustomConversionError" xml:space="preserve">
+    <value>自定义HTML到Markdown转换失败: {0}</value>
+  </data>
+  
+  <!-- 预处理日志 -->
+  <data name="Log_HTMLPreprocessCompleted" xml:space="preserve">
+    <value>HTML预处理完成</value>
+  </data>
+  <data name="Log_HTMLPreprocessError" xml:space="preserve">
+    <value>HTML预处理失败: {0}</value>
+  </data>
+  <data name="Log_MarkdownCleanupCompleted" xml:space="preserve">
+    <value>Markdown内容清理完成</value>
+  </data>
+  <data name="Log_MarkdownCleanupError" xml:space="preserve">
+    <value>Markdown清理失败: {0}</value>
+  </data>
+  <data name="Log_FallbackConversion" xml:space="preserve">
+    <value>使用备用方法进行HTML到Markdown转换</value>
+  </data>
+  <data name="Log_FallbackConversionCompleted" xml:space="preserve">
+    <value>备用HTML到Markdown转换完成</value>
+  </data>
+  <data name="Log_FallbackConversionError" xml:space="preserve">
+    <value>备用转换失败: {0}</value>
+  </data>
+  
+  <!-- 提示信息 -->
+  <data name="Info_ConvertingInProgress" xml:space="preserve">
+    <value>转换正在进行中，请稍候。</value>
+  </data>
+  <data name="Info_OptionsInDevelopment" xml:space="preserve">
+    <value>选项设置功能正在开发中，敬请期待！</value>
+  </data>
+  
+  <!-- 使用说明 -->
+  <data name="Help_Usage" xml:space="preserve">
+    <value>MHTML转HTML/Markdown工具使用说明：
+
+1. 选择文件：
+   - 点击"浏览..."按钮选择MHTML文件
+   - 或者直接拖放.mht/.mhtml文件到输入框
+
+2. 选择输出格式：
+   - HTML格式：保留原始HTML结构和样式
+   - Markdown格式：转换为简洁的Markdown文档
+
+3. 设置输出：
+   - 程序会根据选择的格式自动生成输出文件名
+   - 可以手动修改输出路径
+
+4. 转换选项：
+   - 勾选"包含图片"将图片转换为base64编码嵌入
+   - 不勾选则保持原始图片引用
+   - 勾选"增强Markdown格式处理"获得更好的Markdown格式
+   - 注意：Markdown格式中图片会转换为适当的语法
+
+5. 开始转换：
+   - 点击"开始转换"按钮
+   - 查看转换进度和日志信息
+
+6. 快捷键：
+   - Ctrl+O：打开文件
+   - Alt+F4：退出程序</value>
+  </data>
+  
+  <!-- 最近文件相关 -->
+  <data name="RecentFiles_OpenFailed" xml:space="preserve">
+    <value>打开文件失败: {0}</value>
+  </data>
+  <data name="RecentFiles_FileNotFound" xml:space="preserve">
+    <value>文件不存在，已从最近打开列表中移除。</value>
+  </data>
+  
+  <!-- 语言切换 -->
+  <data name="Language_SwitchSuccess" xml:space="preserve">
+    <value>语言切换成功，部分界面需要重启程序后生效。</value>
+  </data>
+  <data name="Language_SwitchFailed" xml:space="preserve">
+    <value>语言切换失败: {0}</value>
+  </data>
+  
+  <!-- 批量转换窗体 -->
+  <data name="BatchWindow_Title" xml:space="preserve">
+    <value>批量转换MHTML文件</value>
+  </data>
+  <data name="BatchWindow_MainTitle" xml:space="preserve">
+    <value>批量转换MHTML文件</value>
+  </data>
+  <data name="BatchWindow_FileSelection" xml:space="preserve">
+    <value>文件选择</value>
+  </data>
+  <data name="BatchWindow_OutputSettings" xml:space="preserve">
+    <value>输出设置</value>
+  </data>
+  <data name="BatchWindow_ProgressAndLog" xml:space="preserve">
+    <value>转换进度和日志</value>
+  </data>
+  <data name="BatchWindow_AddFiles" xml:space="preserve">
+    <value>添加文件...</value>
+  </data>
+  <data name="BatchWindow_AddFolder" xml:space="preserve">
+    <value>添加文件夹...</value>
+  </data>
+  <data name="BatchWindow_ClearFiles" xml:space="preserve">
+    <value>清空列表</value>
+  </data>
+  <data name="BatchWindow_OutputDirectory" xml:space="preserve">
+    <value>输出目录:</value>
+  </data>
+  <data name="BatchWindow_OutputFormat" xml:space="preserve">
+    <value>输出格式:</value>
+  </data>
+  <data name="BatchWindow_ConvertOptions" xml:space="preserve">
+    <value>转换选项:</value>
+  </data>
+  <data name="BatchWindow_StartConvert" xml:space="preserve">
+    <value>开始批量转换</value>
+  </data>
+  <data name="BatchWindow_StopConvert" xml:space="preserve">
+    <value>停止转换</value>
+  </data>
+  <data name="BatchWindow_SelectedFiles" xml:space="preserve">
+    <value>已选择 {0} 个文件</value>
+  </data>
+  <data name="BatchWindow_Ready" xml:space="preserve">
+    <value>准备就绪</value>
+  </data>
+  <data name="BatchWindow_CurrentFile" xml:space="preserve">
+    <value>当前文件：{0}</value>
+  </data>
+  <data name="BatchWindow_CurrentFileNone" xml:space="preserve">
+    <value>当前文件：无</value>
+  </data>
+  <data name="BatchWindow_ColumnFileName" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+  <data name="BatchWindow_ColumnFileSize" xml:space="preserve">
+    <value>文件大小</value>
+  </data>
+  <data name="BatchWindow_ColumnStatus" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="BatchWindow_ColumnFullPath" xml:space="preserve">
+    <value>完整路径</value>
+  </data>
+  
+  <!-- 批量转换日志 -->
+  <data name="BatchLog_StoppingConversion" xml:space="preserve">
+    <value>正在停止转换...</value>
+  </data>
+  <data name="BatchLog_AddFileFailed" xml:space="preserve">
+    <value>添加文件失败 [{0}]: {1}</value>
+  </data>
+  <data name="BatchLog_FilesAdded" xml:space="preserve">
+    <value>已添加 {0} 个文件到转换列表</value>
+  </data>
+  <data name="BatchLog_StartBatchConversion" xml:space="preserve">
+    <value>开始批量转换 {0} 个文件...</value>
+  </data>
+  <data name="BatchLog_ProgressUpdate" xml:space="preserve">
+    <value>[{0}/{1}] {2}</value>
+  </data>
+  <data name="BatchLog_ConversionStats" xml:space="preserve">
+    <value>转换统计 - 总计: {0}, 成功: {1}, 失败: {2}</value>
+  </data>
+  <data name="BatchLog_ConversionCancelled" xml:space="preserve">
+    <value>批量转换已取消</value>
+  </data>
+  <data name="BatchLog_ConversionError" xml:space="preserve">
+    <value>批量转换出错: {0}</value>
+  </data>
+  <data name="BatchLog_MarkdownConversionFailed" xml:space="preserve">
+    <value>Markdown转换失败: {0}</value>
+  </data>
+  
+  <!-- 关于窗体 -->
+  <data name="AboutWindow_Title" xml:space="preserve">
+    <value>关于 MHTML转换工具</value>
+  </data>
+  <data name="AboutWindow_AppName" xml:space="preserve">
+    <value>MHTML转换工具</value>
+  </data>
+  <data name="AboutWindow_Version" xml:space="preserve">
+    <value>版本 1.0.0</value>
+  </data>
+  <data name="AboutWindow_TechInfo" xml:space="preserve">
+    <value>开发语言：C# / WPF | 框架版本：.NET 8.0</value>
+  </data>
+  <data name="AboutWindow_Features" xml:space="preserve">
+    <value>功能特点</value>
+  </data>
+  <data name="AboutWindow_TechDetails" xml:space="preserve">
+    <value>技术信息</value>
+  </data>
+  <data name="AboutWindow_Copyright" xml:space="preserve">
+    <value>版权信息</value>
+  </data>
+  <data name="AboutWindow_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="AboutWindow_Feature1" xml:space="preserve">
+    <value>• 支持HTML和Markdown双输出格式</value>
+  </data>
+  <data name="AboutWindow_Feature2" xml:space="preserve">
+    <value>• 批量转换功能，支持多文件处理</value>
+  </data>
+  <data name="AboutWindow_Feature3" xml:space="preserve">
+    <value>• 增强的Markdown格式处理</value>
+  </data>
+  <data name="AboutWindow_Feature4" xml:space="preserve">
+    <value>• 智能表格转换（支持thead/tbody结构）</value>
+  </data>
+  <data name="AboutWindow_Feature5" xml:space="preserve">
+    <value>• 优化表格格式</value>
+  </data>
+  <data name="AboutWindow_Feature6" xml:space="preserve">
+    <value>• 支持拖放操作</value>
+  </data>
+  <data name="AboutWindow_Feature7" xml:space="preserve">
+    <value>• 实时转换进度显示</value>
+  </data>
+  <data name="AboutWindow_Feature8" xml:space="preserve">
+    <value>• 详细日志记录和调试模式</value>
+  </data>
+  <data name="AboutWindow_Feature9" xml:space="preserve">
+    <value>• 图片base64编码支持</value>
+  </data>
+  <data name="AboutWindow_Feature10" xml:space="preserve">
+    <value>• 智能编码检测（GB2312、GBK、Big5等）</value>
+  </data>
+  <data name="AboutWindow_Feature11" xml:space="preserve">
+    <value>• 智能HTML预处理和后处理</value>
+  </data>
+  <data name="AboutWindow_Feature12" xml:space="preserve">
+    <value>• 多语言界面支持（中文/英文）</value>
+  </data>
+  <data name="AboutWindow_Feature13" xml:space="preserve">
+    <value>• 最近文件记录功能</value>
+  </data>
+  <data name="AboutWindow_TechDetail1" xml:space="preserve">
+    <value>• 基于Windows Presentation Foundation (WPF)</value>
+  </data>
+  <data name="AboutWindow_TechDetail2" xml:space="preserve">
+    <value>• 使用ReverseMarkdown库进行HTML到Markdown转换</value>
+  </data>
+  <data name="AboutWindow_TechDetail3" xml:space="preserve">
+    <value>• 支持多种中文编码格式</value>
+  </data>
+  <data name="AboutWindow_TechDetail4" xml:space="preserve">
+    <value>• 异步处理确保UI响应性</value>
+  </data>
+  <data name="AboutWindow_CopyrightText" xml:space="preserve">
+    <value>© 2024 MHTML转换工具. 保留所有权利。</value>
+  </data>
+  
+  <!-- 对话框相关 -->
+  <data name="Dialog_SelectFolderWithMHTML" xml:space="preserve">
+    <value>选择包含MHTML文件的文件夹</value>
+  </data>
+  <data name="Dialog_SelectOutputDirectory" xml:space="preserve">
+    <value>选择输出目录</value>
+  </data>
+  
+  <!-- 错误消息相关 -->
+  <data name="Error_ScanFolder" xml:space="preserve">
+    <value>扫描文件夹失败: {0}</value>
+  </data>
+  <data name="Error_ConvertingCannotClear" xml:space="preserve">
+    <value>转换正在进行中，无法清空文件列表。</value>
+  </data>
+</root> 
