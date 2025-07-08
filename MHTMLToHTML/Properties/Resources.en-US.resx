@@ -609,7 +609,7 @@
     <value>MHTML Converter</value>
   </data>
   <data name="AboutWindow_Version" xml:space="preserve">
-    <value>Version 1.0.0</value>
+    <value>Version 1.1.0</value>
   </data>
   <data name="AboutWindow_TechInfo" xml:space="preserve">
     <value>Development Language: C# / WPF | Framework Version: .NET 8.0</value>

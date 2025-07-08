@@ -609,7 +609,7 @@
     <value>MHTML转换工具</value>
   </data>
   <data name="AboutWindow_Version" xml:space="preserve">
-    <value>版本 1.0.0</value>
+    <value>版本 1.1.0</value>
   </data>
   <data name="AboutWindow_TechInfo" xml:space="preserve">
     <value>开发语言：C# / WPF | 框架版本：.NET 8.0</value>
