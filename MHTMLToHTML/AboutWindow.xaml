@@ -136,7 +136,7 @@
 
                 <!-- 应用信息 -->
                 <StackPanel>
-                    <TextBlock Name="txtVersion" Text="Version 1.0.0" Style="{StaticResource VersionText}"/>
+                    <TextBlock Name="txtVersion" Text="Version 1.1.0" Style="{StaticResource VersionText}"/>
                     <TextBlock Name="txtTechInfo" Text="Development Language: C# / WPF | Framework Version: .NET 8.0" Style="{StaticResource VersionText}"/>
 
                     <!-- 功能特点 -->
